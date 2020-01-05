@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Auth from "./Auth";
-import Writ from "./Writ";
+import Auth from "./routes/Auth";
+import Writ from "./routes/Writ";
 
 function App() {
 	return (
