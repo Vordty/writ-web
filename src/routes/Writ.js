@@ -5,7 +5,7 @@ import gql from "graphql-tag";
 
 const GET_USERS = gql`
 	query {
-		users {
+		user(id: 1) {
 			id
 			firstName
 			email
@@ -18,7 +18,7 @@ export const Writ = () => {
 	if (loading) return <div>Loading</div>;
 	if (error) return <div>Error</div>;
 
-	return <div>{data.users && data.users.map(user => <div key={user.id}>{user.firstName}</div>)}</div>;
+	return <div>Hello {data.user.firstName}</div>;
 };
 
 export default Writ;
