@@ -3,7 +3,7 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
-const GET_USERS = gql`
+const GET_USER = gql`
 	query {
 		user(id: 1) {
 			id
@@ -14,7 +14,7 @@ const GET_USERS = gql`
 `;
 
 export const Writ = () => {
-	const { data, loading, error } = useQuery(GET_USERS);
+	const { data, loading, error } = useQuery(GET_USER);
 	if (loading) return <div>Loading</div>;
 	if (error) return <div>Error</div>;
 
