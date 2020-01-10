@@ -7,7 +7,8 @@ import { AuthToken } from "../helpers/Auth";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const token = AuthToken.GET();
+	const [isAuthenticated, setIsAuthenticated] = useState(token ? true : false);
 
 	const [signupMutation] = useMutation(SIGNUP);
 	const [loginMutation] = useMutation(LOGIN);
