@@ -4,6 +4,8 @@ import { GET_USERS } from "../queries/UserQueries";
 
 import { useLazyQuery } from "@apollo/react-hooks";
 
+import Text from "../components/Text/Text";
+
 export const Auth = () => {
 	const { isAuthenticated, login, logout, signup } = useContext(AuthContext);
 
@@ -33,6 +35,8 @@ export const Auth = () => {
 
 	return (
 		<div>
+			<Text type="canon">Test canon font size</Text>
+			<Text type="trafalgar">Test canon font size</Text>
 			<h3>isAuthenticated: {isAuthenticated ? "True" : "False"}</h3>
 			<button onClick={onSignup}>Signup</button>
 			<button onClick={onLogin}>Login</button>
