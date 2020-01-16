@@ -10,6 +10,8 @@ import { ApolloLink, concat } from "apollo-link";
 import * as serviceWorker from "./serviceWorker";
 import App from "./App";
 
+import "./index.scss";
+
 const cache = new InMemoryCache();
 const link = new HttpLink({
 	uri: "http://localhost:4000/graphql"
