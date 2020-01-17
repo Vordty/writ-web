@@ -4,15 +4,11 @@ import Text from "../Text/Text";
 
 import "./Spacer.scss";
 
-export const Spacer = ({ count, symbol, symbolSize, margin = "14px" }) => {
+export const Spacer = ({ count, symbol, symbolSize, style = "m" }) => {
 	const renderSpacer = () => {
 		return <Text type={symbolSize}>{symbol.repeat(count)}</Text>;
 	};
-	return (
-		<div className="spacer" style={{ margin: margin }}>
-			{renderSpacer()}
-		</div>
-	);
+	return <div className={"spacer" + " " + style}>{renderSpacer()}</div>;
 };
 
 export default Spacer;
