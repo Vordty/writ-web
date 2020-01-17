@@ -1,6 +1,7 @@
 // Example Usage	                                    	Group A	Group B	Group C	Group D
-// Main	        	Hero or blog post title	            	28/32	32/36	52/56	44/48
-// Title	    	Article title or section header	    	20/24	24/28	36/40	32/36
+// Main	        							            	64		64		64		64
+// Title	    						    				20/24	24/28	36/40	32/36
+// Medium	    							  				20/24	24/28	36/40	32/36
 
 // Group A: Default sizing 0 - 319 pixels (typically feature phones)
 // Group B: 320 - 599 pixels (typically smart phones)
@@ -10,9 +11,9 @@
 // -- SCREEN WIDTH --
 
 $a-min: 0px;
-$a-max: 319px;
+$a-max: 359px;
 
-$b-min: 320px;
+$b-min: 360px;
 $b-max: 599px;
 
 $c-min: 600px;
@@ -31,6 +32,21 @@ $title-a: 28px;
 $title-b: 36px;
 $title-c: 56px;
 $title-d: 48px;
+
+$medium-a: 16px;
+$medium-b: 20px;
+$medium-c: 20px;
+$medium-d: 20px;
+
+$regular-a: 16px;
+$regular-b: 16px;
+$regular-c: 16px;
+$regular-d: 16px;
+
+$small-a: 12px;
+$small-b: 12px;
+$small-c: 12px;
+$small-d: 12px;
 
 @mixin mobile {
 	@media (min-width: $b-min) {
