@@ -1,0 +1,21 @@
+@import "../../constants/colors.scss";
+
+.button {
+	outline: none;
+	border: none;
+	background: none;
+	cursor: pointer;
+}
+
+.btn-solid {
+	@extend .button;
+	background-color: $primary;
+	color: white;
+	border-radius: 3px;
+	padding: 6px 25px;
+}
+
+.btn-ghost {
+	@extend .button;
+	color: $primary;
+}
