@@ -13,10 +13,38 @@ p {
 	padding: 0;
 }
 
+textarea,
+select,
+input,
+button {
+	outline: none;
+	font-family: inherit;
+}
+
 .mt {
-	margin-top: 14px;
+	margin-top: 16px;
 }
 
 .mb {
-	margin-bottom: 14px;
+	margin-bottom: 16px;
+}
+
+.m {
+	margin: 16px;
+}
+
+@for $i from 1 through 8 {
+	.mt-#{$i} {
+		margin-top: $i * 4px;
+	}
+	.mb-#{$i} {
+		margin-bottom: $i * 4px;
+	}
+	.m-#{$i} {
+		margin: $i * 4px;
+	}
+}
+
+.capitalize {
+	text-transform: uppercase;
 }
