@@ -1,0 +1,27 @@
+@import "../../constants/colors.scss";
+@import "../../constants/sizes.scss";
+
+.card {
+	margin: auto;
+	width: 80%;
+	background-color: $secondary;
+	border: 1px $primary solid;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
+
+	@include mobile() {
+		width: 85%;
+	}
+
+	@include tablet() {
+		width: 60%;
+	}
+
+	@include desktop() {
+		width: 45%;
+	}
+}
