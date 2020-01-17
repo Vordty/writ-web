@@ -1,14 +1,6 @@
-// Example Usage	                                    Group A	Group B	Group C	Group D
-// Canon	        Hero or blog post title	            28/32	32/36	52/56	44/48
-// Trafalgar	    Article title or section header	    20/24	24/28	36/40	32/36
-// Paragon	        Primary headline on indexes	        20/24	22/26	28/32	28/32
-// Double Pica	    Sub header	                        20/24	20/24	26/30	24/28
-// Great Primer	    Headline title or subtitle	        18/22	18/22	21/24	20/24
-// Body Copy	    Article body copy only	            15/20	16/22	18/24	16/22
-// Pica	Index       links, titles & headlines	        15/20	16/20	18/22	16/20
-// Long Primer	    Index body copy & image captions	15/18	15/18	15/20	14/18
-// Brevier	        Time stamps and bylines	            14/16	14/18	14/18	13/16
-// Minion	        Small header capitals	            12/16	12/16	13/16	12/16
+// Example Usage	                                    	Group A	Group B	Group C	Group D
+// Main	        	Hero or blog post title	            	28/32	32/36	52/56	44/48
+// Title	    	Article title or section header	    	20/24	24/28	36/40	32/36
 
 // Group A: Default sizing 0 - 319 pixels (typically feature phones)
 // Group B: 320 - 599 pixels (typically smart phones)
@@ -30,55 +22,15 @@ $d-min: 768px;
 
 // -- FONT SIZES --
 
-$canon-a: 28px;
-$canon-b: 36px;
-$canon-c: 56px;
-$canon-d: 48px;
+$main-a: 64px;
+$main-b: 64px;
+$main-c: 64px;
+$main-d: 64px;
 
-$trafalgar-a: 24px;
-$trafalgar-b: 28px;
-$trafalgar-c: 40px;
-$trafalgar-d: 36px;
-
-$paragon-a: 24px;
-$paragon-b: 26px;
-$paragon-c: 32px;
-$paragon-d: 32px;
-
-$double-pica-a: 24px;
-$double-pica-b: 24px;
-$double-pica-c: 30px;
-$double-pica-d: 28px;
-
-$great-primer-a: 22px;
-$great-primer-b: 22px;
-$great-primer-c: 24px;
-$great-primer-d: 24px;
-
-$body-copy-a: 20px;
-$body-copy-b: 22px;
-$body-copy-c: 24px;
-$body-copy-d: 22px;
-
-$pica-index-a: 20px;
-$pica-index-b: 20px;
-$pica-index-c: 22px;
-$pica-index-d: 20px;
-
-$long-primer-a: 18px;
-$long-primer-b: 18px;
-$long-primer-c: 20px;
-$long-primer-d: 18px;
-
-$brevier-a: 16px;
-$brevier-b: 18px;
-$brevier-c: 18px;
-$brevier-d: 16px;
-
-$minion-a: 16px;
-$minion-b: 16px;
-$minion-c: 16px;
-$minion-d: 16px;
+$title-a: 28px;
+$title-b: 36px;
+$title-c: 56px;
+$title-d: 48px;
 
 @mixin mobile {
 	@media (min-width: $b-min) {

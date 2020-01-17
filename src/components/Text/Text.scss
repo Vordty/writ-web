@@ -15,65 +15,17 @@
 }
 
 $font-list: (
-	"canon": (
-		$canon-a,
-		$canon-b,
-		$canon-c,
-		$canon-d
+	"main": (
+		$main-a,
+		$main-b,
+		$main-c,
+		$main-d
 	),
-	"trafalgar": (
-		$trafalgar-a,
-		$trafalgar-b,
-		$trafalgar-c,
-		$trafalgar-d
-	),
-	"paragon": (
-		$paragon-a,
-		$paragon-b,
-		$paragon-c,
-		$paragon-d
-	),
-	"double-pica": (
-		$double-pica-a,
-		$double-pica-b,
-		$double-pica-c,
-		$double-pica-d
-	),
-	"great-primer": (
-		$great-primer-a,
-		$great-primer-b,
-		$great-primer-c,
-		$great-primer-d
-	),
-	"body-copy": (
-		$body-copy-a,
-		$body-copy-b,
-		$body-copy-c,
-		$body-copy-d
-	),
-	"pica-index": (
-		$pica-index-a,
-		$pica-index-b,
-		$pica-index-c,
-		$pica-index-d
-	),
-	"long-primer": (
-		$long-primer-a,
-		$long-primer-b,
-		$long-primer-c,
-		$long-primer-d
-	),
-	"brevier": (
-		$brevier-a,
-		$brevier-b,
-		$brevier-c,
-		$brevier-d
-	),
-	"minion": (
-		$minion-a,
-		$minion-b,
-		$minion-c,
-		$minion-d
+	"title": (
+		$title-a,
+		$title-b,
+		$title-c,
+		$title-d
 	)
 );
 
