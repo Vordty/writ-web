@@ -4,15 +4,15 @@ import { GET_USERS } from "../queries/UserQueries";
 
 import { useLazyQuery } from "@apollo/react-hooks";
 
+import Background from "../components/Background/Background";
+import Card from "../components/Card/Card";
 import Text from "../components/Text/Text";
+import Spacer from "../components/Spacer/Spacer";
+import Input from "../components/Input/Input";
+import Button from "../components/Button/Button";
 
 export const Auth = () => {
 	const { isAuthenticated, login, logout, signup } = useContext(AuthContext);
-
-	const [getUsersQuery, { loading, data, error }] = useLazyQuery(GET_USERS);
-
-	if (loading && !data) return "Loading...";
-	if (error) return `Error! ${error.message}`;
 
 	const onSignup = () => {
 		signup();
@@ -26,26 +26,26 @@ export const Auth = () => {
 		logout();
 	};
 
-	const onGetUsers = async () => {
-		getUsersQuery();
-		if (data) {
-			console.log("data", data);
-		}
-	};
-
 	return (
-		<div>
-			<Text type="canon">Test canon font size</Text>
-			<Text type="trafalgar">Test canon font size</Text>
-			<h3>isAuthenticated: {isAuthenticated ? "True" : "False"}</h3>
-			<button onClick={onSignup}>Signup</button>
-			<button onClick={onLogin}>Login</button>
-			<button onClick={onLogout}>Logout</button>
-			<button onClick={onGetUsers}>Get Users</button>
-
-			<h4>USERS</h4>
-			<div>{data && data.users.map(user => <div>{user.firstName}</div>)}</div>
-		</div>
+		<Background pattern="dots">
+			<Card>
+				<div className="mt">
+					<Text type="title">LOGIN</Text>
+				</div>
+				<Spacer count="18" symbol="~" symbolSize="medium" />
+				<Input containerStyle="mb" placeholder="Type your email" />
+				<Input hidden={true} placeholder="Type your password" />
+				<Spacer count="18" symbol="~" symbolSize="medium" />
+				<Button type="btn-solid" style="capitalize">
+					Log In
+				</Button>
+				<div className="mb-8 mt-2">
+					<Button type="btn-ghost" isSmall={true}>
+						Forgot Credentials?
+					</Button>
+				</div>
+			</Card>
+		</Background>
 	);
 };
 
