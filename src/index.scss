@@ -1,3 +1,22 @@
-@import "./constants/sizes.scss";
-@import "./constants/colors.scss";
-@import "./components/Text/Text.scss";
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap");
+@import "./constants//colors.scss";
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: "Roboto", sans-serif;
+	color: $primary;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+.mt {
+	margin-top: 14px;
+}
+
+.mb {
+	margin-bottom: 14px;
+}
