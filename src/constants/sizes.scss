@@ -1,13 +1,3 @@
-// Example Usage	                                    	Group A	Group B	Group C	Group D
-// Main	        							            	64		64		64		64
-// Title	    						    				20/24	24/28	36/40	32/36
-// Medium	    							  				20/24	24/28	36/40	32/36
-
-// Group A: Default sizing 0 - 319 pixels (typically feature phones)
-// Group B: 320 - 599 pixels (typically smart phones)
-// Group C: 600 pixels and above (typically tablet devices)
-// Group D: 600 pixels and above when touch is not available (typically desktop or laptop screens)
-
 // -- SCREEN WIDTH --
 
 $a-min: 0px;
@@ -23,6 +13,9 @@ $d-min: 768px;
 $d-max: 1024px;
 
 $e-min: 1025px;
+$e-max: 1365px;
+
+$f-min: 1366px;
 
 // -- FONT SIZES --
 
@@ -31,36 +24,42 @@ $main-b: 64px;
 $main-c: 64px;
 $main-d: 64px;
 $main-e: 64px;
+$main-f: 64px;
 
-$title-a: 28px;
-$title-b: 36px;
+$title-a: 36px;
+$title-b: 40px;
 $title-c: 56px;
 $title-d: 62px;
-$title-e: 48px;
+$title-e: 60px;
+$title-f: 74px;
 
 $medium-a: 16px;
 $medium-b: 20px;
 $medium-c: 20px;
-$medium-d: 32px;
+$medium-d: 34px;
 $medium-e: 30px;
+$medium-f: 30px;
 
 $regular-a: 16px;
 $regular-b: 16px;
 $regular-c: 16px;
-$regular-d: 22px;
-$regular-e: 16px;
+$regular-d: 24px;
+$regular-e: 20px;
+$regular-f: 24px;
 
 $small-a: 12px;
 $small-b: 12px;
 $small-c: 12px;
-$small-d: 12px;
-$small-e: 12px;
+$small-d: 16px;
+$small-e: 14px;
+$small-f: 16px;
 
 $input-a: 16px;
 $input-b: 16px;
 $input-c: 16px;
-$input-d: 24px;
-$input-e: 16px;
+$input-d: 22px;
+$input-e: 18px;
+$input-f: 18px;
 
 @mixin mobile {
 	@media (min-width: $b-min) {
@@ -80,13 +79,19 @@ $input-e: 16px;
 	}
 }
 
-@mixin desktop {
+@mixin desktop-small {
 	@media (min-width: $e-min) {
 		@content;
 	}
 }
 
-@mixin resize($property, $value-b, $value-c, $value-d, $value-e) {
+@mixin desktop {
+	@media (min-width: $f-min) {
+		@content;
+	}
+}
+
+@mixin resize($property, $value-b, $value-c, $value-d, $value-e, $value-f) {
 	@include mobile() {
 		#{$property}: $value-b;
 	}
@@ -99,7 +104,11 @@ $input-e: 16px;
 		#{$property}: $value-d;
 	}
 
-	@include desktop() {
+	@include desktop-small() {
 		#{$property}: $value-e;
+	}
+
+	@include desktop() {
+		#{$property}: $value-f;
 	}
 }
