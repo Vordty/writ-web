@@ -33,18 +33,87 @@ button {
 	margin: 16px;
 }
 
+.mtpc {
+	margin-top: 8%;
+}
+
+.mbpc {
+	margin-bottom: 8%;
+}
+
+.mpc {
+	margin: 8%;
+}
+
+$pixel-increment: 4px;
+$percent-increment: 1.5%;
+
 @for $i from 1 through 8 {
 	.mt-#{$i} {
-		margin-top: $i * 4px;
+		margin-top: $i * $pixel-increment;
 	}
 	.mb-#{$i} {
-		margin-bottom: $i * 4px;
+		margin-bottom: $i * $pixel-increment;
+	}
+	.ml-#{$i} {
+		margin-left: $i * $pixel-increment;
+	}
+	.mr-#{$i} {
+		margin-right: $i * $pixel-increment;
 	}
 	.m-#{$i} {
-		margin: $i * 4px;
+		margin: $i * $pixel-increment;
+	}
+
+	.mtpc-#{$i} {
+		margin-top: $i * $percent-increment;
+	}
+	.mbpc-#{$i} {
+		margin-bottom: $i * $percent-increment;
+	}
+	.mlpc-#{$i} {
+		margin-left: $i * $percent-increment;
+	}
+	.mrpc-#{$i} {
+		margin-right: $i * $percent-increment;
+	}
+	.mpc-#{$i} {
+		margin: $i * $percent-increment;
 	}
 }
 
 .capitalize {
 	text-transform: uppercase;
+}
+
+.unselectable {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.corner-tl {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.corner-tr {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.corner-bl {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+.corner-br {
+	position: absolute;
+	bottom: 0;
+	right: 0;
 }
