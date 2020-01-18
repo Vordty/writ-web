@@ -27,7 +27,8 @@
 			color: $fade;
 		}
 
-		@include resize(font-size, $input-b, $input-c, $input-d, $input-e);
-		@include resize(border-radius, 5px, 5px, 8px, 8px);
+		@include resize(font-size, $input-b, $input-c, $input-d, $input-e, $input-f);
+		@include resize(border-radius, 5px, 5px, 8px, 8px, 8px);
+		@include resize(padding, 4%, 4%, 4%, 4%, 3.5%);
 	}
 }
