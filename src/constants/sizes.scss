@@ -20,6 +20,9 @@ $c-min: 600px;
 $c-max: 767px;
 
 $d-min: 768px;
+$d-max: 1024px;
+
+$e-min: 1025px;
 
 // -- FONT SIZES --
 
@@ -27,26 +30,37 @@ $main-a: 64px;
 $main-b: 64px;
 $main-c: 64px;
 $main-d: 64px;
+$main-e: 64px;
 
 $title-a: 28px;
 $title-b: 36px;
 $title-c: 56px;
-$title-d: 48px;
+$title-d: 62px;
+$title-e: 48px;
 
 $medium-a: 16px;
 $medium-b: 20px;
 $medium-c: 20px;
-$medium-d: 20px;
+$medium-d: 32px;
+$medium-e: 30px;
 
 $regular-a: 16px;
 $regular-b: 16px;
 $regular-c: 16px;
-$regular-d: 16px;
+$regular-d: 22px;
+$regular-e: 16px;
 
 $small-a: 12px;
 $small-b: 12px;
 $small-c: 12px;
 $small-d: 12px;
+$small-e: 12px;
+
+$input-a: 16px;
+$input-b: 16px;
+$input-c: 16px;
+$input-d: 24px;
+$input-e: 16px;
 
 @mixin mobile {
 	@media (min-width: $b-min) {
@@ -60,8 +74,32 @@ $small-d: 12px;
 	}
 }
 
-@mixin desktop {
+@mixin tablet-large {
 	@media (min-width: $d-min) {
 		@content;
+	}
+}
+
+@mixin desktop {
+	@media (min-width: $e-min) {
+		@content;
+	}
+}
+
+@mixin resize($property, $value-b, $value-c, $value-d, $value-e) {
+	@include mobile() {
+		#{$property}: $value-b;
+	}
+
+	@include tablet() {
+		#{$property}: $value-c;
+	}
+
+	@include tablet-large() {
+		#{$property}: $value-d;
+	}
+
+	@include desktop() {
+		#{$property}: $value-e;
 	}
 }
