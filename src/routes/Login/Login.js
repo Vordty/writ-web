@@ -10,7 +10,7 @@ import Button from "../../components/Button/Button";
 const Login = () => {
 	return (
 		<Background pattern="dots">
-			<Button type="btn-solid" style="capitalize corner-tr mt-4 mr-4">
+			<Button type="btn-ghost" style="capitalize corner-tr mt-4 mr-4">
 				Sign Up
 			</Button>
 			<Card>
@@ -24,8 +24,8 @@ const Login = () => {
 				<Button type="btn-solid" style="capitalize">
 					Log In
 				</Button>
-				<div className="mb-8 mt-2">
-					<Button type="btn-ghost" isSmall={true}>
+				<div className="mbpc-5 mt-2">
+					<Button type="btn-ghost" textType="small">
 						Forgot Credentials?
 					</Button>
 				</div>
