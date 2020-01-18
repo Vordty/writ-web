@@ -3,7 +3,7 @@
 
 .card {
 	margin: auto;
-	width: 80%;
+	width: 94%;
 	background-color: $secondary;
 	border: 1px $primary solid;
 	border-radius: 5px;
@@ -13,5 +13,5 @@
 	align-items: center;
 	box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
 
-	@include resize(width, 85%, 60%, 75%, 45%);
+	@include resize(width, 90%, 60%, 75%, 45%, 40%);
 }
