@@ -1,49 +1,40 @@
 @import "../../constants//sizes.scss";
 
-@mixin resize($font-b, $font-c, $font-d) {
-	@include mobile() {
-		font-size: $font-b;
-	}
-
-	@include tablet() {
-		font-size: $font-c;
-	}
-
-	@include desktop() {
-		font-size: $font-d;
-	}
-}
-
 $font-list: (
 	"main": (
 		$main-a,
 		$main-b,
 		$main-c,
-		$main-d
+		$main-d,
+		$main-e
 	),
 	"title": (
 		$title-a,
 		$title-b,
 		$title-c,
-		$title-d
+		$title-d,
+		$title-e
 	),
 	"medium": (
 		$medium-a,
 		$medium-b,
 		$medium-c,
-		$medium-d
+		$medium-d,
+		$medium-e
 	),
 	"regular": (
 		$regular-a,
 		$regular-b,
 		$regular-c,
-		$regular-d
+		$regular-d,
+		$regular-e
 	),
 	"small": (
 		$small-a,
 		$small-b,
 		$small-c,
-		$small-d
+		$small-d,
+		$small-e
 	)
 );
 
@@ -54,6 +45,12 @@ $keys: map-keys($font-list);
 
 		font-size: nth($key-values, 1);
 
-		@include resize(nth($key-values, 2), nth($key-values, 2), nth($key-values, 3));
+		@include resize(
+			font-size,
+			nth($key-values, 2),
+			nth($key-values, 3),
+			nth($key-values, 4),
+			nth($key-values, 5)
+		);
 	}
 }
