@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Auth from "./routes/Auth";
+import Login from "./routes/Login/Login";
 import Writ from "./routes/Writ";
 import { AuthProvider } from "./contexts/AuthContext";
 
@@ -11,9 +11,8 @@ function App() {
 			<div className="App">
 				<Router>
 					<Switch>
-						{/* check if authenticated and decide route */}
-						<Route path="/auth">
-							<Auth />
+						<Route path="/login">
+							<Login />
 						</Route>
 						<Route path="/app">
 							<Writ />
