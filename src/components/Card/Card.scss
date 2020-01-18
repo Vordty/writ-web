@@ -13,15 +13,5 @@
 	align-items: center;
 	box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
 
-	@include mobile() {
-		width: 85%;
-	}
-
-	@include tablet() {
-		width: 60%;
-	}
-
-	@include desktop() {
-		width: 45%;
-	}
+	@include resize(width, 85%, 60%, 75%, 45%);
 }
