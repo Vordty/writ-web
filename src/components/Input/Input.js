@@ -2,7 +2,7 @@ import React from "react";
 
 import "./Input.scss";
 
-export const Input = ({ style = "", containerStyle = "", placeholder = "Missing placeholder", hidden }) => {
+const Input = ({ style = "", containerStyle = "", placeholder = "Missing placeholder", hidden }) => {
 	const inputType = hidden ? "password" : "text";
 
 	return (

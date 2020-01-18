@@ -1,7 +1,7 @@
 import React from "react";
 import "./Background.scss";
 
-export const Background = ({ pattern, children }) => {
+const Background = ({ pattern, children }) => {
 	const renderBackground = () => {
 		switch (pattern) {
 			case "dots":

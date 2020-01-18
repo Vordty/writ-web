@@ -11,7 +11,7 @@ import Spacer from "../components/Spacer/Spacer";
 import Input from "../components/Input/Input";
 import Button from "../components/Button/Button";
 
-export const Auth = () => {
+const Auth = () => {
 	const { isAuthenticated, login, logout, signup } = useContext(AuthContext);
 
 	const onSignup = () => {

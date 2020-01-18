@@ -13,7 +13,7 @@ const GET_USER = gql`
 	}
 `;
 
-export const Writ = () => {
+const Writ = () => {
 	const { data, loading, error } = useQuery(GET_USER);
 	if (loading) return <div>Loading</div>;
 	if (error) return <div>Error</div>;

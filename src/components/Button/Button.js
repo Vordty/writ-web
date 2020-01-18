@@ -4,7 +4,7 @@ import Text from "../Text/Text";
 
 import "./Button.scss";
 
-export const Button = ({ type, isSmall, style = "", children }) => {
+const Button = ({ type, isSmall, style = "", children }) => {
 	const textType = isSmall ? "small" : "regular";
 	return (
 		<div className="button-container">

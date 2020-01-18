@@ -4,7 +4,7 @@ import Text from "../Text/Text";
 
 import "./Spacer.scss";
 
-export const Spacer = ({ count, symbol, symbolSize, style = "m" }) => {
+const Spacer = ({ count, symbol, symbolSize, style = "m" }) => {
 	const renderSpacer = () => {
 		return <Text type={symbolSize}>{symbol.repeat(count)}</Text>;
 	};
