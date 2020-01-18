@@ -6,35 +6,40 @@ $font-list: (
 		$main-b,
 		$main-c,
 		$main-d,
-		$main-e
+		$main-e,
+		$main-f
 	),
 	"title": (
 		$title-a,
 		$title-b,
 		$title-c,
 		$title-d,
-		$title-e
+		$title-e,
+		$title-f
 	),
 	"medium": (
 		$medium-a,
 		$medium-b,
 		$medium-c,
 		$medium-d,
-		$medium-e
+		$medium-e,
+		$medium-f
 	),
 	"regular": (
 		$regular-a,
 		$regular-b,
 		$regular-c,
 		$regular-d,
-		$regular-e
+		$regular-e,
+		$regular-f
 	),
 	"small": (
 		$small-a,
 		$small-b,
 		$small-c,
 		$small-d,
-		$small-e
+		$small-e,
+		$small-f
 	)
 );
 
@@ -50,7 +55,8 @@ $keys: map-keys($font-list);
 			nth($key-values, 2),
 			nth($key-values, 3),
 			nth($key-values, 4),
-			nth($key-values, 5)
+			nth($key-values, 5),
+			nth($key-values, 6)
 		);
 	}
 }
