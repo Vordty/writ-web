@@ -13,9 +13,9 @@ $d-min: 768px;
 $d-max: 1024px;
 
 $e-min: 1025px;
-$e-max: 1365px;
+$e-max: 1366px;
 
-$f-min: 1366px;
+$f-min: 1367px;
 
 // -- FONT SIZES --
 
@@ -31,7 +31,7 @@ $title-b: 40px;
 $title-c: 56px;
 $title-d: 62px;
 $title-e: 60px;
-$title-f: 74px;
+$title-f: 80px;
 
 $medium-a: 16px;
 $medium-b: 20px;
@@ -59,7 +59,14 @@ $input-b: 16px;
 $input-c: 16px;
 $input-d: 22px;
 $input-e: 18px;
-$input-f: 18px;
+$input-f: 22px;
+
+$spacer-a: 16px;
+$spacer-b: 20px;
+$spacer-c: 30px;
+$spacer-d: 30px;
+$spacer-e: 30px;
+$spacer-f: 30px;
 
 @mixin mobile {
 	@media (min-width: $b-min) {
