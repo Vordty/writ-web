@@ -4,11 +4,8 @@ import Text from "../Text/Text";
 
 import "./Spacer.scss";
 
-const Spacer = ({ count, symbol, symbolSize, style = "mpc-3 unselectable" }) => {
-	const renderSpacer = () => {
-		return <Text type={symbolSize}>{symbol.repeat(count)}</Text>;
-	};
-	return <div className={"spacer" + " " + style}>{renderSpacer()}</div>;
+const Spacer = ({ count, symbol, style = "mpc-3 unselectable" }) => {
+	return <div className={"spacer" + " " + style}>{symbol.repeat(count)}</div>;
 };
 
 export default Spacer;

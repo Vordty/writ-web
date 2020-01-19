@@ -17,10 +17,10 @@ const Login = () => {
 				<div className="mtpc-5">
 					<Text type="title">LOGIN</Text>
 				</div>
-				<Spacer count="18" symbol="~" symbolSize="medium" />
+				<Spacer count="18" symbol="~" />
 				<Input containerStyle="mb" placeholder="Type your email" />
 				<Input hidden={true} placeholder="Type your password" />
-				<Spacer count="18" symbol="~" symbolSize="medium" />
+				<Spacer count="18" symbol="~" />
 				<Button type="btn-solid" style="capitalize">
 					Log In
 				</Button>
