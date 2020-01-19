@@ -14,4 +14,8 @@
 	box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
 
 	@include resize(width, 90%, 60%, 75%, 45%, 40%);
+
+	@media (min-width: $d-min) and (orientation: landscape) {
+		max-width: 50%;
+	}
 }
