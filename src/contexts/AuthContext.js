@@ -13,29 +13,28 @@ export const AuthProvider = ({ children }) => {
 	const [signupMutation] = useMutation(SIGNUP);
 	const [loginMutation] = useMutation(LOGIN);
 
-	const signup = async () => {
+	const signup = async ({ email, username, password, rePassword }) => {
 		const {
 			data: { signup }
 		} = await signupMutation({
 			variables: {
-				firstName: "axalisaxeli",
-				lastName: "axaligvari",
-				email: "axaliemail2@gmail.com",
-				password: "axalipass123",
-				rePassword: "axalipass123"
+				email,
+				username,
+				password,
+				rePassword
 			}
 		});
 
 		console.log("Signup Data", signup);
 	};
 
-	const login = async () => {
+	const login = async ({ email, password }) => {
 		const {
 			data: { login }
 		} = await loginMutation({
 			variables: {
-				email: "axaliemail2@gmail.com",
-				password: "axalipass123"
+				email,
+				password
 			}
 		});
 
