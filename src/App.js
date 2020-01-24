@@ -1,9 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 import Login from "./routes/Login/Login";
 import Signup from "./routes/Signup/Signup";
-import Writ from "./routes/Writ";
+import Main from "./routes/Main/Main";
+import PrivateRoute from "./routes/Auth/PrivateRoute";
+
 import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
@@ -12,15 +14,10 @@ function App() {
 			<div className="App">
 				<Router>
 					<Switch>
-						<Route path="/login">
-							<Login />
-						</Route>
-						<Route path="/signup">
-							<Signup />
-						</Route>
-						<Route path="/app">
-							<Writ />
-						</Route>
+						<Redirect exact from="/" to="/app" />
+						<Route path="/login" component={Login} />
+						<Route path="/signup" component={Signup} />
+						<PrivateRoute path="/app" component={Main} />
 					</Switch>
 				</Router>
 			</div>
