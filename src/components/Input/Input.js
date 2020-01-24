@@ -2,12 +2,12 @@ import React from "react";
 
 import "./Input.scss";
 
-const Input = ({ style = "", containerStyle = "", placeholder = "Missing placeholder", hidden }) => {
+const Input = ({ style = "", containerStyle = "", placeholder = "Missing placeholder", hidden, ...props }) => {
 	const inputType = hidden ? "password" : "text";
 
 	return (
 		<div className={"input-container" + " " + containerStyle}>
-			<input className={"input" + " " + style} type={inputType} placeholder={placeholder} />
+			<input {...props} className={"input" + " " + style} type={inputType} placeholder={placeholder} />
 		</div>
 	);
 };
