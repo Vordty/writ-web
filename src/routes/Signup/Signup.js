@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import Background from "../../components/Background/Background";
 import Card from "../../components/Card/Card";
@@ -11,14 +11,16 @@ import Button from "../../components/Button/Button";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Signup = () => {
+	const history = useHistory();
+
+	const { signupTest } = useContext(AuthContext);
+
 	const [form, setForm] = useState({
 		email: "",
 		username: "",
 		password: "",
 		rePassword: ""
 	});
-
-	const { signup } = useContext(AuthContext);
 
 	const onChange = e => {
 		setForm({
@@ -27,8 +29,11 @@ const Signup = () => {
 		});
 	};
 
-	const onSignup = () => {
-		signup(form);
+	const onSignup = async () => {
+		const signupData = await signupTest(form);
+		if (signupData.success) {
+			history.push("/verification");
+		}
 	};
 
 	return (

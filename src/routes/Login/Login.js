@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import Background from "../../components/Background/Background";
 import Card from "../../components/Card/Card";
@@ -11,12 +11,14 @@ import Button from "../../components/Button/Button";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Login = () => {
+	const history = useHistory();
+
+	const { login } = useContext(AuthContext);
+
 	const [form, setForm] = useState({
 		email: "",
 		password: ""
 	});
-
-	const { login } = useContext(AuthContext);
 
 	const onChange = e => {
 		setForm({
@@ -25,8 +27,11 @@ const Login = () => {
 		});
 	};
 
-	const onLogin = () => {
-		login(form);
+	const onLogin = async () => {
+		const loginData = await login(form);
+		if (loginData.success) {
+			history.push("/app");
+		}
 	};
 
 	return (
@@ -58,7 +63,7 @@ const Login = () => {
 					Log In
 				</Button>
 				<div className="mbpc-5 mt-2">
-					<Button type="btn-ghost" textType="small">
+					<Button type="btn-ghost" style="small">
 						Forgot Credentials?
 					</Button>
 				</div>
