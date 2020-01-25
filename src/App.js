@@ -4,7 +4,10 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import Login from "./routes/Login/Login";
 import Signup from "./routes/Signup/Signup";
 import Main from "./routes/Main/Main";
+import Verification from "./routes/Verification/Verification";
+
 import PrivateRoute from "./routes/Auth/PrivateRoute";
+import AuthRoute from "./routes/Auth/AuthRoute";
 
 import { AuthProvider } from "./contexts/AuthContext";
 
@@ -15,8 +18,9 @@ function App() {
 				<Router>
 					<Switch>
 						<Redirect exact from="/" to="/app" />
-						<Route path="/login" component={Login} />
-						<Route path="/signup" component={Signup} />
+						<AuthRoute path="/login" component={Login} redirectPath="/app" />
+						<AuthRoute path="/signup" component={Signup} redirectPath="/app" />
+						<Route path="/verification" component={Verification} />
 						<PrivateRoute path="/app" component={Main} />
 					</Switch>
 				</Router>
