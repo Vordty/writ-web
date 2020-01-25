@@ -49,6 +49,7 @@ $keys: map-keys($font-list);
 		$key-values: map-get($font-list, $key);
 
 		font-size: nth($key-values, 1);
+		text-align: center;
 
 		@include resize(
 			font-size,
