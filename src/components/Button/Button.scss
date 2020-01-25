@@ -1,10 +1,25 @@
 @import "../../constants/colors.scss";
+@import "../../constants/sizes.scss";
 
 .button {
 	outline: none;
 	border: none;
 	background: none;
 	cursor: pointer;
+	font-size: $button-a;
+	@include resize(font-size, $button-b, $button-c, $button-d, $button-e, $button-f);
+
+	&.small {
+		font-size: $button-small-a;
+		@include resize(
+			font-size,
+			$button-small-b,
+			$button-small-c,
+			$button-small-d,
+			$button-small-e,
+			$button-small-f
+		);
+	}
 }
 
 .btn-solid {

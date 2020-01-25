@@ -4,11 +4,11 @@ import Text from "../Text/Text";
 
 import "./Button.scss";
 
-const Button = ({ type, textType = "regular", style = "", children, ...props }) => {
+const Button = ({ type, style = "", children, ...props }) => {
 	return (
 		<div className="button-container">
 			<button {...props} className={type + " " + style}>
-				<Text type={textType}>{children}</Text>
+				{children}
 			</button>
 		</div>
 	);
