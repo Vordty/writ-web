@@ -18,4 +18,10 @@
 	@media (min-width: $d-min) and (orientation: landscape) {
 		max-width: 50%;
 	}
+
+	&.ghost {
+		border: none;
+		background: none;
+		box-shadow: none;
+	}
 }
