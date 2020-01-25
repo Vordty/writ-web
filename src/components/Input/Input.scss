@@ -30,5 +30,15 @@
 		@include resize(border-radius, 5px, 5px, 8px, 8px, 8px);
 		@include resize(padding, 4%, 4%, 4%, 4%, 3.1%);
 		@include resize(padding-left, 5%, 5%, 5%, 5%, 5%);
+
+		&.square {
+			box-sizing: content-box;
+			width: 40px;
+			height: 40px;
+			padding: 2px;
+			text-align: center;
+
+			@include resize(padding, 2px, 2px, 2px, 2px, 8px);
+		}
 	}
 }
