@@ -85,6 +85,14 @@ $percent-increment: 1.5%;
 	.mpc-#{$i} {
 		margin: $i * $percent-increment;
 	}
+
+	.wpc-#{$i} {
+		width: $i * $percent-increment * 5;
+	}
+
+	.hpc-#{$i} {
+		width: $i * $percent-increment * 5;
+	}
 }
 
 .capitalize {
@@ -120,4 +128,22 @@ $percent-increment: 1.5%;
 	position: absolute;
 	bottom: 0;
 	right: 0;
+}
+
+.flex {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.flex-h {
+	@extend .flex;
+
+	flex-direction: row;
+}
+
+.flex-v {
+	@extend .flex;
+
+	flex-direction: column;
 }
