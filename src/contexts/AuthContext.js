@@ -1,7 +1,7 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import { SIGNUP, LOGIN } from "../queries/AuthQueries";
+import { useLazyQuery, useQuery, useMutation } from "@apollo/react-hooks";
+import { SIGNUP, LOGIN, GET_AUTHENTICATED_USER, SIGNUP_TEST } from "../queries/AuthQueries";
 import { AuthToken } from "../helpers/Auth";
 
 export const AuthContext = createContext();
@@ -9,14 +9,16 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 	const token = AuthToken.GET();
 	const [isAuthenticated, setIsAuthenticated] = useState(token ? true : false);
-
-	const [signupMutation] = useMutation(SIGNUP);
+	const [signupTestMutation] = useMutation(SIGNUP_TEST);
 	const [loginMutation] = useMutation(LOGIN);
+	const [user, setUser] = useState({
+		email: localStorage.getItem("EMAIL")
+	});
 
-	const signup = async ({ email, username, password, rePassword }) => {
+	const signupTest = async ({ email, username, password, rePassword }) => {
 		const {
-			data: { signup }
-		} = await signupMutation({
+			data: { signupTest }
+		} = await signupTestMutation({
 			variables: {
 				email,
 				username,
@@ -25,7 +27,12 @@ export const AuthProvider = ({ children }) => {
 			}
 		});
 
-		console.log("Signup Data", signup);
+		setUser({ email: email });
+		localStorage.setItem("EMAIL", email);
+
+		console.log("Signup Data", signupTest);
+
+		return signupTest;
 	};
 
 	const login = async ({ email, password }) => {
@@ -41,7 +48,7 @@ export const AuthProvider = ({ children }) => {
 		const token = AuthToken.GET();
 		if (isAuthenticated || token) {
 			console.log("Already logged in");
-			return;
+			return login;
 		}
 
 		if (login.success) {
@@ -51,6 +58,8 @@ export const AuthProvider = ({ children }) => {
 		}
 
 		console.log("Login Data", login);
+
+		return login;
 	};
 
 	const logout = () => {
@@ -64,5 +73,9 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
-	return <AuthContext.Provider value={{ isAuthenticated, signup, login, logout }}>{children}</AuthContext.Provider>;
+	return (
+		<AuthContext.Provider value={{ isAuthenticated, user, signupTest, login, logout }}>
+			{children}
+		</AuthContext.Provider>
+	);
 };
