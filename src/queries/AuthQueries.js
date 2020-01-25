@@ -7,8 +7,19 @@ export const SIGNUP = gql`
 			message
 			user {
 				id
-				username
+				email
 			}
+		}
+	}
+`;
+
+export const SIGNUP_TEST = gql`
+	mutation SignupTest($email: String!, $username: String!, $password: String!, $rePassword: String!) {
+		signupTest(
+			signupInput: { email: $email, username: $username, password: $password, rePassword: $rePassword }
+		) {
+			success
+			message
 		}
 	}
 `;
@@ -19,6 +30,16 @@ export const LOGIN = gql`
 			success
 			message
 			token
+		}
+	}
+`;
+
+export const GET_AUTHENTICATED_USER = gql`
+	query {
+		getAuthedUser {
+			id
+			username
+			email
 		}
 	}
 `;
