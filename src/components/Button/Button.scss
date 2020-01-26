@@ -34,3 +34,19 @@
 	@extend .button;
 	color: $primary;
 }
+
+$mult: 2;
+.btn-square {
+	@extend .btn-solid;
+	width: 46px;
+
+	@include resize(padding, 6%, 6%, 6%, 6%, 6%);
+	@include resize(
+		font-size,
+		$button-b * $mult,
+		$button-c * $mult,
+		$button-d * $mult,
+		$button-e * $mult,
+		$button-f * $mult
+	);
+}
