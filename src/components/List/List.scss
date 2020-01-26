@@ -1,0 +1,8 @@
+@import "../../constants/sizes.scss";
+
+.list {
+	overflow: scroll;
+	height: 54vh;
+	width: 94%;
+	@include resize(width, 94%, 90%, 90%, 90%, 90%);
+}
