@@ -33,7 +33,9 @@ const Projects = () => {
 					<ProjectItem />
 					<ProjectItem />
 					<ProjectItem />
+					<ProjectItem />
 				</List>
+				<Spacer count="10" symbol="~" />
 			</Card>
 		</Background>
 	);
