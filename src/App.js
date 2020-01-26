@@ -5,6 +5,7 @@ import Login from "./routes/Login/Login";
 import Signup from "./routes/Signup/Signup";
 import Main from "./routes/Main/Main";
 import Verification from "./routes/Verification/Verification";
+import Projects from "./routes/Projects/Projects";
 
 import PrivateRoute from "./routes/Auth/PrivateRoute";
 import AuthRoute from "./routes/Auth/AuthRoute";
@@ -21,6 +22,7 @@ function App() {
 						<AuthRoute path="/login" component={Login} redirectPath="/app" />
 						<AuthRoute path="/signup" component={Signup} redirectPath="/app" />
 						<Route path="/verification" component={Verification} />
+						<PrivateRoute path="/projects" component={Projects} />
 						<PrivateRoute path="/app" component={Main} />
 					</Switch>
 				</Router>
