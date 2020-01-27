@@ -24,6 +24,15 @@ export const SIGNUP_TEST = gql`
 	}
 `;
 
+export const SEND_CONFIRMATION_CODE = gql`
+	mutation SendConfirmationCode($email: String!) {
+		sendConfirmationCode(email: $email) {
+			success
+			message
+		}
+	}
+`;
+
 export const LOGIN = gql`
 	mutation Login($email: String!, $password: String!) {
 		login(email: $email, password: $password) {
