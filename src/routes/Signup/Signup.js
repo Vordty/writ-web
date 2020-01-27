@@ -13,7 +13,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 const Signup = () => {
 	const history = useHistory();
 
-	const { signupTest } = useContext(AuthContext);
+	const { signupTest, sendConfirmationCode } = useContext(AuthContext);
 
 	const [form, setForm] = useState({
 		email: "",
@@ -32,6 +32,7 @@ const Signup = () => {
 	const onSignup = async () => {
 		const signupData = await signupTest(form);
 		if (signupData.success) {
+			sendConfirmationCode(form.email);
 			history.push("/verification");
 		}
 	};

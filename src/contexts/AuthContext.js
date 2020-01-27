@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 
 import { useLazyQuery, useQuery, useMutation } from "@apollo/react-hooks";
-import { SIGNUP, LOGIN, GET_AUTHENTICATED_USER, SIGNUP_TEST } from "../queries/AuthQueries";
+import { SIGNUP, LOGIN, GET_AUTHENTICATED_USER, SIGNUP_TEST, SEND_CONFIRMATION_CODE } from "../queries/AuthQueries";
 import { AuthToken } from "../helpers/Auth";
 
 export const AuthContext = createContext();
@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
 	const token = AuthToken.GET();
 	const [isAuthenticated, setIsAuthenticated] = useState(token ? true : false);
 	const [signupTestMutation] = useMutation(SIGNUP_TEST);
+	const [sendConfirmationCodeMutation] = useMutation(SEND_CONFIRMATION_CODE);
 	const [loginMutation] = useMutation(LOGIN);
 	const [user, setUser] = useState({
 		email: localStorage.getItem("EMAIL")
@@ -33,6 +34,12 @@ export const AuthProvider = ({ children }) => {
 		console.log("Signup Data", signupTest);
 
 		return signupTest;
+	};
+
+	const sendConfirmationCode = async email => {
+		const result = await sendConfirmationCodeMutation({
+			variables: { email }
+		});
 	};
 
 	const login = async ({ email, password }) => {
@@ -74,7 +81,7 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	return (
-		<AuthContext.Provider value={{ isAuthenticated, user, signupTest, login, logout }}>
+		<AuthContext.Provider value={{ isAuthenticated, user, signupTest, sendConfirmationCode, login, logout }}>
 			{children}
 		</AuthContext.Provider>
 	);
