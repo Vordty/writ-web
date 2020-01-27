@@ -94,7 +94,7 @@ const Verification = () => {
 					<div className="mpc-2">
 						<Input
 							autoFocus
-							style="square"
+							style="input-square"
 							containerStyle="mb"
 							maxLength="1"
 							inputRef={input => {
@@ -108,7 +108,7 @@ const Verification = () => {
 					</div>
 					<div className="mpc-2">
 						<Input
-							style="square"
+							style="input-square"
 							containerStyle="mb"
 							maxLength="1"
 							inputRef={input => {
@@ -122,7 +122,7 @@ const Verification = () => {
 					</div>
 					<div className="mpc-2">
 						<Input
-							style="square"
+							style="input-square"
 							containerStyle="mb"
 							maxLength="1"
 							inputRef={input => {
@@ -136,7 +136,7 @@ const Verification = () => {
 					</div>
 					<div className="mpc-2">
 						<Input
-							style="square"
+							style="input-square"
 							containerStyle="mb"
 							maxLength="1"
 							inputRef={input => {
