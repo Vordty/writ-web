@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 
 import Login from "./routes/Login/Login";
 import Signup from "./routes/Signup/Signup";
-import Main from "./routes/Main/Main";
+import Editor from "./routes/Editor/Editor";
 import Verification from "./routes/Verification/Verification";
 import Projects from "./routes/Projects/Projects";
 
@@ -23,7 +23,7 @@ function App() {
 						<AuthRoute path="/signup" component={Signup} redirectPath="/app" />
 						<Route path="/verification" component={Verification} />
 						<PrivateRoute path="/projects" component={Projects} />
-						<PrivateRoute path="/app" component={Main} />
+						<PrivateRoute path="/app" component={Editor} />
 					</Switch>
 				</Router>
 			</div>
