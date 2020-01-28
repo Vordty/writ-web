@@ -1,0 +1,18 @@
+@import "../../../constants/colors.scss";
+
+.sidebar {
+	display: flex;
+	flex-direction: row;
+
+	.sidebar-options {
+		width: 4%;
+		height: 100vh;
+		background-color: $primary;
+		color: $secondary;
+	}
+
+	.sidebar-content {
+		border-right: 1px solid black;
+		max-width: 20%;
+	}
+}
