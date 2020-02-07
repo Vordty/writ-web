@@ -12,7 +12,7 @@ const Sidebar = () => {
 				<div className="sidebar-option">ITEM 1</div>
 				<div className="sidebar-option">ITEM 1</div>
 			</div>
-			<Resizable width="12%" height="100vh" customStyle="sidebar-content" />
+			<Resizable customStyle="sidebar-content" />
 		</div>
 	);
 };
