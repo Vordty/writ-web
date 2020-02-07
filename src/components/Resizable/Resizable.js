@@ -2,12 +2,17 @@ import React, { useState, useRef } from "react";
 
 import "./Resizable.scss";
 
-const Resizable = ({ width, height, customStyle }) => {
+const Resizable = ({ width, customStyle }) => {
 	const [resizableWidth, setResizableWidth] = useState(width);
 	const [isResizing, setIsResizing] = useState(false);
 
-	const maxWidth = 600;
+	const maxWidth = 480;
 	const minWidth = 100;
+	const resizableRef = useRef(null);
+
+	const isInRange = e => {
+		return e.clientX < maxWidth && e.clientX > minWidth;
+	};
 
 	const isAtResizePoint = (target, clientX) => {
 		var rect = target.getBoundingClientRect();
@@ -21,10 +26,8 @@ const Resizable = ({ width, height, customStyle }) => {
 	};
 
 	const onMouseMove = e => {
-		if (e.button === 0) {
-			if (e.clientX - e.target.getBoundingClientRect().left > minWidth && e.clientX < maxWidth) {
-				setResizableWidth(`${e.clientX - e.target.getBoundingClientRect().left}px`);
-			}
+		if (isInRange(e)) {
+			setResizableWidth(`${e.clientX - resizableRef.current.getBoundingClientRect().left}px`);
 		}
 	};
 
@@ -64,18 +67,16 @@ const Resizable = ({ width, height, customStyle }) => {
 	};
 
 	return (
-		<div style={{ width: "100%", height: "100%" }}>
-			<div
-				style={{
-					height: height,
-					width: resizableWidth
-				}}
-				className={"resizable" + " " + customStyle}
-				onMouseMove={onMouseOver}
-				onMouseDown={onMouseDown}
-				onMouseLeave={onMouseLeave}
-			></div>
-		</div>
+		<div
+			ref={resizableRef}
+			style={{
+				width: resizableWidth
+			}}
+			className={"resizable" + " " + customStyle}
+			onMouseMove={onMouseOver}
+			onMouseDown={onMouseDown}
+			onMouseLeave={onMouseLeave}
+		></div>
 	);
 };
 
