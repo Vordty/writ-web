@@ -5,6 +5,7 @@
 	flex-direction: row;
 
 	.sidebar-options {
+		min-width: 50px;
 		width: 4%;
 		height: 100vh;
 		background-color: $primary;
@@ -13,6 +14,7 @@
 
 	.sidebar-content {
 		border-right: 1px solid black;
-		max-width: 20%;
+		width: 250px;
+		height: 100vh;
 	}
 }
