@@ -1,0 +1,15 @@
+.list-draggable {
+	display: flex;
+	height: 6%;
+	width: 100%;
+}
+
+.list-draggable-item {
+	padding: 8px;
+	background-color: lightgray;
+	margin: 8px;
+	width: 100px;
+
+	display: flex;
+	align-items: center;
+}
