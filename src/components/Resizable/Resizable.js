@@ -2,12 +2,10 @@ import React, { useState, useRef } from "react";
 
 import "./Resizable.scss";
 
-const Resizable = ({ width, customStyle }) => {
+const Resizable = ({ width, customStyle, minWidth, maxWidth, children }) => {
 	const [resizableWidth, setResizableWidth] = useState(width);
 	const [isResizing, setIsResizing] = useState(false);
 
-	const maxWidth = 480;
-	const minWidth = 100;
 	const resizableRef = useRef(null);
 
 	const isInRange = e => {
@@ -76,7 +74,9 @@ const Resizable = ({ width, customStyle }) => {
 			onMouseMove={onMouseOver}
 			onMouseDown={onMouseDown}
 			onMouseLeave={onMouseLeave}
-		></div>
+		>
+			{children}
+		</div>
 	);
 };
 
