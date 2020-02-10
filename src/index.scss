@@ -70,6 +70,22 @@ $percent-increment: 1.5%;
 		margin: $i * $pixel-increment;
 	}
 
+	.pt-#{$i} {
+		padding-top: $i * $pixel-increment;
+	}
+	.pb-#{$i} {
+		padding-bottom: $i * $pixel-increment;
+	}
+	.pl-#{$i} {
+		padding-left: $i * $pixel-increment;
+	}
+	.pr-#{$i} {
+		padding-right: $i * $pixel-increment;
+	}
+	.pm-#{$i} {
+		padding: $i * $pixel-increment;
+	}
+
 	.mtpc-#{$i} {
 		margin-top: $i * $percent-increment;
 	}
