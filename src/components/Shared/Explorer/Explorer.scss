@@ -1,0 +1,19 @@
+@import "../../../constants/colors.scss";
+
+.explorer {
+	display: flex;
+	flex-direction: column;
+	height: 90%;
+
+	.project-title {
+		padding: 12px;
+		padding-left: 20px;
+		border-top: 1px solid $primary;
+		border-bottom: 1px solid $primary;
+	}
+
+	.explorer-body {
+		padding-top: 12px;
+		height: 100%;
+	}
+}
