@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import Folder from "./Folder/Folder";
 import File from "./File/File";
 
 import "./Explorer.scss";
@@ -43,16 +42,17 @@ const Explorer = () => {
 		return <File className="explorer-file" title={title} level={level} levelIndentStep={levelIndentStep} />;
 	};
 
-	const renderFolder = ({ id, title, isOpen }, level) => {
+	const renderFolder = ({ id, title, isOpen, isFolder }, level) => {
 		const folderChildren = fileTree.filter(item => item.parentId === id);
 
 		return (
-			<Folder
+			<File
 				id={id}
 				title={title}
 				isOpen={isOpen}
 				level={level}
 				isOpen={isOpen}
+				isFolder={isFolder}
 				levelIndentStep={levelIndentStep}
 				onClick={toggleFolder}
 			>
@@ -66,7 +66,7 @@ const Explorer = () => {
 
 					return items;
 				})}
-			</Folder>
+			</File>
 		);
 	};
 
