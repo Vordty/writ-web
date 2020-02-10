@@ -1,3 +1,8 @@
 .editor {
 	display: flex;
 }
+
+.opened-files-container {
+	border: 1px solid black;
+	border-left: none;
+}
