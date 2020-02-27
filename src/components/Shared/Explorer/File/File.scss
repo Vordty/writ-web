@@ -9,3 +9,18 @@
 		background-color: $fade-light;
 	}
 }
+
+.arrow {
+	width: 5.5%;
+	height: 30%;
+	cursor: pointer;
+	padding-right: 6px;
+}
+
+.arrow-open {
+	@extend .arrow;
+	transform: rotate(90deg);
+	position: relative;
+	top: 4px;
+	padding-right: 8px;
+}
