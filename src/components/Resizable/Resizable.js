@@ -38,12 +38,14 @@ const Resizable = ({ width, customStyle, minWidth, maxWidth, children }) => {
 	};
 
 	const onMouseDown = e => {
-		e.preventDefault();
-		if (isAtResizePoint(e.target, e.clientX)) {
-			setIsResizing(true);
-			document.body.style.cursor = "e-resize";
-			document.addEventListener("mousemove", onMouseMove);
-			document.addEventListener("mouseup", onMouseUp);
+		if (e.button === 0) {
+			e.preventDefault();
+			if (isAtResizePoint(e.target, e.clientX)) {
+				setIsResizing(true);
+				document.body.style.cursor = "e-resize";
+				document.addEventListener("mousemove", onMouseMove);
+				document.addEventListener("mouseup", onMouseUp);
+			}
 		}
 	};
 
