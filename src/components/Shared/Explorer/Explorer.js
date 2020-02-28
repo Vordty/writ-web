@@ -38,7 +38,7 @@ const Explorer = () => {
 		{ id: 5, title: "Test File 3", isFolder: false, parentId: 4, isOpen: false }
 	]);
 
-	const levelIndentStep = 16;
+	const levelIndentStep = 20;
 
 	const toggleFolder = id => {
 		const folderTreeCopy = fileTree;
