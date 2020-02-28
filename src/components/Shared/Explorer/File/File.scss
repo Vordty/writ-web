@@ -4,6 +4,9 @@
 .folder-title {
 	padding: 4px;
 	transition: background-color 0.2s ease-in-out;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 
 	&:hover {
 		background-color: $fade-light;
@@ -11,8 +14,8 @@
 }
 
 .arrow {
-	width: 5.5%;
-	height: 30%;
+	width: 12px;
+	height: 12px;
 	cursor: pointer;
 	padding-right: 6px;
 }
