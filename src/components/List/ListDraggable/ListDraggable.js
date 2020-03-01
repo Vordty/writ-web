@@ -23,13 +23,19 @@ const ListDraggable = ({ children, customStyle }) => {
 		setItems(arrayMove(items, oldIndex, newIndex));
 	};
 
-	const SortableItem = SortableElement(({ value }) => <div className="list-draggable-item">{value}</div>);
+	const SortableItem = SortableElement(({ value }) => {
+		return (
+			<div className="list-draggable-item" key={value}>
+				{value}
+			</div>
+		);
+	});
 
 	const SortableList = SortableContainer(({ items }) => {
 		return (
 			<div className="list-draggable">
 				{items.map((value, index) => (
-					<SortableItem key={`item-${value}`} index={index} value={value} />
+					<SortableItem key={`item-${value.key}`} index={index} value={value} />
 				))}
 			</div>
 		);
