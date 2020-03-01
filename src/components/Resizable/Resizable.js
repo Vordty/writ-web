@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 
 import "./Resizable.scss";
 
-const Resizable = ({ width, customStyle, minWidth, maxWidth, children }) => {
+const Resizable = ({ width, customStyle, minWidth, maxWidth, restrictionTop, children }) => {
 	const [resizableWidth, setResizableWidth] = useState(width);
 	const [isResizing, setIsResizing] = useState(false);
 
@@ -16,7 +16,10 @@ const Resizable = ({ width, customStyle, minWidth, maxWidth, children }) => {
 		var rect = target.getBoundingClientRect();
 		var x = clientX - rect.left;
 
-		if (rect.width - x < 5) {
+		const isString = typeof target.className === "string";
+		const isAtResizePoint = rect.width - x < 5 && isString;
+
+		if (isAtResizePoint) {
 			return true;
 		} else {
 			return false;
