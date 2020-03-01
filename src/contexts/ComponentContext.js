@@ -1,59 +1,65 @@
-import React, { createContext, useState, useRef } from "react";
+import React, { createContext, useState, useRef, useEffect } from "react";
 
 import ContextMenu from "../components/Shared/ContextMenu/ContextMenu";
 import ContextMenuItem from "../components/Shared/ContextMenu/ContextMenuItem/ContextMenuItem";
 
 import { useOutsideAlerter } from "../helpers/OutsideClick";
 import { positionMenu } from "../helpers/PositionContextMenu";
-import CONTEXT_MENU_SCHEMA from "../schemas/ContextMenuSchema";
+import MENU_SCHEMA from "../schemas/MenuSchema";
 
 export const ComponentContext = createContext();
 
 export const ComponentProvider = ({ children }) => {
-	const contextMenuRef = useRef(null);
-	useOutsideAlerter(contextMenuRef, () => hideContextMenu());
+  const contextMenuRef = useRef(null);
+  useOutsideAlerter(contextMenuRef, () => hideContextMenu());
 
-	const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
-	const [contextMenuType, setContextMenuType] = useState("");
+  const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
+  const [menuType, setMenuType] = useState("");
+  const [lastEvent, setLastEvent] = useState();
 
-	const showContextMenu = e => {
-		setIsContextMenuOpen(true);
-		positionMenu(e, contextMenuRef.current);
-	};
+  useEffect(() => {
+    if (isContextMenuOpen) {
+      positionMenu(lastEvent, contextMenuRef.current);
+    }
+  }, [isContextMenuOpen]);
 
-	const hideContextMenu = () => {
-		setIsContextMenuOpen(false);
-	};
+  const showContextMenu = e => {
+    setIsContextMenuOpen(true);
+  };
 
-	const onRightClick = (e, type) => {
-		setContextMenuType(type);
-		if (e.button === 2) {
-			document.addEventListener("contextmenu", onContextMenu);
-		}
-	};
+  const hideContextMenu = () => {
+    setIsContextMenuOpen(false);
+  };
 
-	const onContextMenu = e => {
-		e.preventDefault();
-		showContextMenu(e);
-		document.removeEventListener("contextmenu", onContextMenu);
-	};
+  const onMenuClick = (e, type) => {
+    e.persist();
+    e.preventDefault();
+    setLastEvent(e);
 
-	const getContextMenuItems = () => {
-		const result = CONTEXT_MENU_SCHEMA(contextMenuType);
+    setMenuType(type);
+    showContextMenu(e);
+  };
 
-		const items = result.map(item => (
-			<ContextMenuItem onClick={item.action} key={item.title}>
-				{item.title}
-			</ContextMenuItem>
-		));
+  const getContextMenuItems = () => {
+    const result = MENU_SCHEMA(menuType);
 
-		return items;
-	};
+    const items = result.map(item => (
+      <ContextMenuItem onClick={item.action} key={item.title}>
+        {item.title}
+      </ContextMenuItem>
+    ));
 
-	return (
-		<ComponentContext.Provider value={{ showContextMenu, hideContextMenu, onRightClick }}>
-			{children}
-			{isContextMenuOpen && <ContextMenu menuRef={contextMenuRef} items={getContextMenuItems} />}
-		</ComponentContext.Provider>
-	);
+    return items;
+  };
+
+  return (
+    <ComponentContext.Provider
+      value={{ showContextMenu, hideContextMenu, onMenuClick }}
+    >
+      {children}
+      {isContextMenuOpen && (
+        <ContextMenu menuRef={contextMenuRef} items={getContextMenuItems} />
+      )}
+    </ComponentContext.Provider>
+  );
 };
