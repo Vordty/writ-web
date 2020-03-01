@@ -63,8 +63,16 @@ const Explorer = () => {
 		return items;
 	};
 
-	const renderFile = ({ title }, level) => {
-		return <File className="explorer-file" title={title} level={level} levelIndentStep={levelIndentStep} />;
+	const renderFile = ({ id, title }, level) => {
+		return (
+			<File
+				className="explorer-file"
+				title={title}
+				level={level}
+				levelIndentStep={levelIndentStep}
+				key={id}
+			/>
+		);
 	};
 
 	const renderFolder = ({ id, title, isOpen, isFolder }, level) => {
@@ -80,6 +88,7 @@ const Explorer = () => {
 				isFolder={isFolder}
 				levelIndentStep={levelIndentStep}
 				onClick={toggleFolder}
+				key={id}
 			>
 				{folderChildren.map(item => {
 					const items = [];
