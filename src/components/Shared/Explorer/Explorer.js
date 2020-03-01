@@ -1,118 +1,122 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 
 import File from "./File/File";
 
 import "./Explorer.scss";
 import Icon from "../../Icon/Icon";
 
+import { ComponentContext } from "../../../contexts/ComponentContext";
+
 const Explorer = () => {
-	const [fileTree, setFileTree] = useState([
-		{
-			id: 1,
-			title: "Test Folder 1",
-			isFolder: true,
-			parentId: -1,
-			isOpen: false
-		},
-		{
-			id: 2,
-			title: "Test File 1",
-			isFolder: false,
-			parentId: 1,
-			isOpen: false
-		},
-		{
-			id: 3,
-			title: "Test File 2",
-			isFolder: false,
-			parentId: 1,
-			isOpen: false
-		},
-		{
-			id: 4,
-			title: "Test Folder 2",
-			isFolder: true,
-			parentId: 1,
-			isOpen: false
-		},
-		{ id: 5, title: "Test File 3", isFolder: false, parentId: 4, isOpen: false }
-	]);
+  const [fileTree, setFileTree] = useState([
+    {
+      id: 1,
+      title: "Test Folder 1",
+      isFolder: true,
+      parentId: -1,
+      isOpen: false
+    },
+    {
+      id: 2,
+      title: "Test File 1",
+      isFolder: false,
+      parentId: 1,
+      isOpen: false
+    },
+    {
+      id: 3,
+      title: "Test File 2",
+      isFolder: false,
+      parentId: 1,
+      isOpen: false
+    },
+    {
+      id: 4,
+      title: "Test Folder 2",
+      isFolder: true,
+      parentId: 1,
+      isOpen: false
+    },
+    { id: 5, title: "Test File 3", isFolder: false, parentId: 4, isOpen: false }
+  ]);
 
-	const levelIndentStep = 20;
+  const { onMenuClick } = useContext(ComponentContext);
 
-	const toggleFolder = id => {
-		const folderTreeCopy = fileTree;
-		const foundItem = folderTreeCopy.find(item => item.id === id);
-		const index = folderTreeCopy.indexOf(foundItem);
-		foundItem.isOpen = !foundItem.isOpen;
-		folderTreeCopy[index] = foundItem;
-		setFileTree([...folderTreeCopy]);
-	};
+  const levelIndentStep = 20;
 
-	const renderExplorerBody = () => {
-		const items = [];
-		const level = 1;
+  const toggleFolder = id => {
+    const folderTreeCopy = fileTree;
+    const foundItem = folderTreeCopy.find(item => item.id === id);
+    const index = folderTreeCopy.indexOf(foundItem);
+    foundItem.isOpen = !foundItem.isOpen;
+    folderTreeCopy[index] = foundItem;
+    setFileTree([...folderTreeCopy]);
+  };
 
-		const topLevelFiles = fileTree.filter(item => item.parentId === -1);
-		topLevelFiles.map(item => {
-			if (item.isFolder) {
-				items.push(renderFolder(item, level));
-			}
-		});
+  const renderExplorerBody = () => {
+    const items = [];
+    const level = 1;
 
-		return items;
-	};
+    const topLevelFiles = fileTree.filter(item => item.parentId === -1);
+    topLevelFiles.map(item => {
+      if (item.isFolder) {
+        items.push(renderFolder(item, level));
+      }
+    });
 
-	const renderFile = ({ id, title }, level) => {
-		return (
-			<File
-				className="explorer-file"
-				title={title}
-				level={level}
-				levelIndentStep={levelIndentStep}
-				key={id}
-			/>
-		);
-	};
+    return items;
+  };
 
-	const renderFolder = ({ id, title, isOpen, isFolder }, level) => {
-		const folderChildren = fileTree.filter(item => item.parentId === id);
+  const renderFile = ({ id, title }, level) => {
+    return (
+      <File
+        className="explorer-file"
+        title={title}
+        level={level}
+        levelIndentStep={levelIndentStep}
+        key={id}
+      />
+    );
+  };
 
-		return (
-			<File
-				id={id}
-				title={title}
-				isOpen={isOpen}
-				level={level}
-				isOpen={isOpen}
-				isFolder={isFolder}
-				levelIndentStep={levelIndentStep}
-				onClick={toggleFolder}
-				key={id}
-			>
-				{folderChildren.map(item => {
-					const items = [];
-					if (item.isFolder) {
-						items.push(renderFolder(item, level + 1));
-					} else {
-						items.push(renderFile(item, level + 1));
-					}
+  const renderFolder = ({ id, title, isOpen, isFolder }, level) => {
+    const folderChildren = fileTree.filter(item => item.parentId === id);
 
-					return items;
-				})}
-			</File>
-		);
-	};
+    return (
+      <File
+        id={id}
+        title={title}
+        isOpen={isOpen}
+        level={level}
+        isOpen={isOpen}
+        isFolder={isFolder}
+        levelIndentStep={levelIndentStep}
+        onClick={toggleFolder}
+        key={id}
+      >
+        {folderChildren.map(item => {
+          const items = [];
+          if (item.isFolder) {
+            items.push(renderFolder(item, level + 1));
+          } else {
+            items.push(renderFile(item, level + 1));
+          }
 
-	return (
-		<div className="explorer">
-			<div className="project-title">
-				<div className="project-title-text">Interstellar</div>
-				<Icon type="dot3" />
-			</div>
-			<div className="explorer-body">{renderExplorerBody()}</div>
-		</div>
-	);
+          return items;
+        })}
+      </File>
+    );
+  };
+
+  return (
+    <div className="explorer">
+      <div className="project-title">
+        <div className="project-title-text">Interstellar</div>
+        <Icon type="dot3" onClick={e => onMenuClick(e, "projectTitle")} />
+      </div>
+      <div className="explorer-body">{renderExplorerBody()}</div>
+    </div>
+  );
 };
 
 export default Explorer;
