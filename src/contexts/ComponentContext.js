@@ -41,7 +41,11 @@ export const ComponentProvider = ({ children }) => {
 	const getContextMenuItems = () => {
 		const result = CONTEXT_MENU_SCHEMA(contextMenuType);
 
-		const items = result.map(item => <ContextMenuItem onClick={item.action}>{item.title}</ContextMenuItem>);
+		const items = result.map(item => (
+			<ContextMenuItem onClick={item.action} key={item.title}>
+				{item.title}
+			</ContextMenuItem>
+		));
 
 		return items;
 	};
