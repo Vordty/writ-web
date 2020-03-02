@@ -4,12 +4,12 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
 import "./ListDraggable.scss";
 
-const ListDraggable = ({ children, customStyle }) => {
+const ListDraggable = ({ children, containerStyle = "", itemStyle = "" }) => {
 	const [items, setItems] = useState([]);
 
 	useEffect(() => {
 		setItems(getItems());
-	}, []);
+	}, [children]);
 
 	const getItems = () => {
 		const items = [];
@@ -25,7 +25,7 @@ const ListDraggable = ({ children, customStyle }) => {
 
 	const SortableItem = SortableElement(({ value }) => {
 		return (
-			<div className="list-draggable-item" key={value}>
+			<div className={"list-draggable-item " + itemStyle} key={value}>
 				{value}
 			</div>
 		);
@@ -33,7 +33,7 @@ const ListDraggable = ({ children, customStyle }) => {
 
 	const SortableList = SortableContainer(({ items }) => {
 		return (
-			<div className="list-draggable">
+			<div className={"list-draggable " + containerStyle}>
 				{items.map((value, index) => (
 					<SortableItem key={`item-${value.key}`} index={index} value={value} />
 				))}
@@ -41,7 +41,7 @@ const ListDraggable = ({ children, customStyle }) => {
 		);
 	});
 
-	return <SortableList items={items} onSortEnd={onSortEnd} axis={"x"} />;
+	return <SortableList items={items} onSortEnd={onSortEnd} axis={"x"} distance={10} />;
 };
 
 export default ListDraggable;

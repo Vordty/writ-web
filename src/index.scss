@@ -156,16 +156,26 @@ $percent-increment: 1.5%;
 	align-items: center;
 }
 
-.flex-h {
+.flex-center-h {
 	@extend .flex;
 
 	flex-direction: row;
 }
 
-.flex-v {
+.flex-center-v {
 	@extend .flex;
 
 	flex-direction: column;
+}
+
+.flex-v {
+	display: flex;
+	flex-direction: column;
+}
+
+.flex-h {
+	display: flex;
+	flex-direction: row;
 }
 
 .ft-thin {
