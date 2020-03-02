@@ -12,23 +12,26 @@ import AuthRoute from "./routes/RouteTypes/AuthRoute";
 
 import { AuthProvider } from "./contexts/AuthContext";
 import { ComponentProvider } from "./contexts/ComponentContext";
+import { FileProvider } from "./contexts/FileContext";
 
 function App() {
 	return (
 		<AuthProvider>
 			<ComponentProvider>
-				<div className="App">
-					<Router>
-						<Switch>
-							<Redirect exact from="/" to="/app" />
-							<AuthRoute path="/login" component={Login} redirectPath="/app" />
-							<AuthRoute path="/signup" component={Signup} redirectPath="/app" />
-							<Route path="/verification" component={Verification} />
-							<PrivateRoute path="/projects" component={Projects} />
-							<PrivateRoute path="/app" component={Editor} />
-						</Switch>
-					</Router>
-				</div>
+				<FileProvider>
+					<div className="App">
+						<Router>
+							<Switch>
+								<Redirect exact from="/" to="/app" />
+								<AuthRoute path="/login" component={Login} redirectPath="/app" />
+								<AuthRoute path="/signup" component={Signup} redirectPath="/app" />
+								<Route path="/verification" component={Verification} />
+								<PrivateRoute path="/projects" component={Projects} />
+								<PrivateRoute path="/app" component={Editor} />
+							</Switch>
+						</Router>
+					</div>
+				</FileProvider>
 			</ComponentProvider>
 		</AuthProvider>
 	);
