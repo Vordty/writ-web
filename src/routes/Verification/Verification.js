@@ -90,7 +90,7 @@ const Verification = () => {
 				<div className="mtpc-1">
 					<Text type="medium">{user.email}</Text>
 				</div>
-				<div className="mtpc-3 flex-h">
+				<div className="mtpc-3 flex-center-h">
 					<div className="mpc-2">
 						<Input
 							autoFocus
