@@ -1,0 +1,25 @@
+@import "../../../constants/colors.scss";
+
+.opened-file {
+	background: none;
+	margin: 4px 8px;
+
+	&:hover {
+		background-color: $fade-light;
+	}
+}
+
+.opened-file-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.opened-file-x {
+	width: 20px;
+	height: 20px;
+	path {
+		fill: $primary !important;
+	}
+}
