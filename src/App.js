@@ -17,8 +17,8 @@ import { FileProvider } from "./contexts/FileContext";
 function App() {
 	return (
 		<AuthProvider>
-			<ComponentProvider>
-				<FileProvider>
+			<FileProvider>
+				<ComponentProvider>
 					<div className="App">
 						<Router>
 							<Switch>
@@ -31,8 +31,8 @@ function App() {
 							</Switch>
 						</Router>
 					</div>
-				</FileProvider>
-			</ComponentProvider>
+				</ComponentProvider>
+			</FileProvider>
 		</AuthProvider>
 	);
 }
