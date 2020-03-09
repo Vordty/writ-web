@@ -6,7 +6,7 @@ import { FileContext } from "../../../../contexts/FileContext";
 
 import "./File.scss";
 
-const File = ({ id, title, level, levelIndentStep, onClick, isOpen, isFolder, children }) => {
+const File = ({ id, title, level, levelIndentStep, onClick, isOpen, isFolder, children, ...props }) => {
 	const { onMenuClick } = useContext(ComponentContext);
 	const { openFile } = useContext(FileContext);
 
@@ -14,6 +14,7 @@ const File = ({ id, title, level, levelIndentStep, onClick, isOpen, isFolder, ch
 		<Fragment>
 			<div className="folder">
 				<div
+					{...props}
 					className="folder-title"
 					onClick={() => onClick(id)}
 					onContextMenu={e => onMenuClick(e, "folder", "right")}
@@ -27,6 +28,7 @@ const File = ({ id, title, level, levelIndentStep, onClick, isOpen, isFolder, ch
 		</Fragment>
 	) : (
 		<div
+			{...props}
 			className="file"
 			style={{ paddingLeft: `${level * levelIndentStep}px` }}
 			onContextMenu={e => onMenuClick(e, "file")}
