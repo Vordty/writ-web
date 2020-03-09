@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, Fragment } from "react";
 
 import "./Resizable.scss";
 
@@ -6,7 +6,13 @@ const Resizable = ({ width, customStyle, minWidth, maxWidth, restrictionTop, chi
 	const [resizableWidth, setResizableWidth] = useState(width);
 	const [isResizing, setIsResizing] = useState(false);
 
+	const [dragLinePositionX, setDragLinePositionX] = useState(0);
+
 	const resizableRef = useRef(null);
+
+	useEffect(() => {
+		setDragLinePositionX(resizableRef.current.offsetLeft + resizableRef.current.clientWidth);
+	}, [resizableRef.current, resizableWidth]);
 
 	const isInRange = e => {
 		return e.clientX < maxWidth && e.clientX > minWidth;
@@ -34,6 +40,7 @@ const Resizable = ({ width, customStyle, minWidth, maxWidth, restrictionTop, chi
 
 	const onMouseUp = e => {
 		e.preventDefault();
+
 		setIsResizing(false);
 		document.body.style.cursor = "default";
 		document.removeEventListener("mousemove", onMouseMove);
@@ -70,18 +77,26 @@ const Resizable = ({ width, customStyle, minWidth, maxWidth, restrictionTop, chi
 	};
 
 	return (
-		<div
-			ref={resizableRef}
-			style={{
-				width: resizableWidth
-			}}
-			className={"resizable" + " " + customStyle}
-			onMouseMove={onMouseOver}
-			onMouseDown={onMouseDown}
-			onMouseLeave={onMouseLeave}
-		>
-			{children}
-		</div>
+		<Fragment>
+			<div
+				className="resizable-drag-line"
+				style={{
+					left: dragLinePositionX
+				}}
+				onMouseMove={onMouseOver}
+				onMouseDown={onMouseDown}
+				onMouseLeave={onMouseLeave}
+			></div>
+			<div
+				ref={resizableRef}
+				style={{
+					width: resizableWidth
+				}}
+				className={"resizable" + " " + customStyle}
+			>
+				{children}
+			</div>
+		</Fragment>
 	);
 };
 
