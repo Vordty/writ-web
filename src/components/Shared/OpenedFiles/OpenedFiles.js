@@ -7,7 +7,7 @@ import Icon from "../../Icon/Icon";
 import { FileContext } from "../../../contexts/FileContext";
 
 const OpenedFiles = ({ children, style }) => {
-	const { fileTree, getFileOnlyTree, displayFile, closeFile } = useContext(FileContext);
+	const { getFileOnlyTree, displayFile, closeFile } = useContext(FileContext);
 
 	const filterFileTree = () => {
 		const filteredFileTree = getFileOnlyTree().filter(file => file.isOpen);
