@@ -9,6 +9,8 @@ export const FileProvider = ({ children }) => {
 			title: "Test Folder 1",
 			isFolder: true,
 			parentId: -1,
+			level: 0,
+
 			isOpen: false,
 			order: null
 		},
@@ -17,6 +19,8 @@ export const FileProvider = ({ children }) => {
 			title: "test_file_1",
 			isFolder: false,
 			parentId: 1,
+			level: 1,
+
 			isOpen: true,
 			order: 3
 		},
@@ -25,6 +29,8 @@ export const FileProvider = ({ children }) => {
 			title: "test_file_2",
 			isFolder: false,
 			parentId: 1,
+			level: 1,
+
 			isOpen: true,
 			order: 2
 		},
@@ -33,10 +39,12 @@ export const FileProvider = ({ children }) => {
 			title: "Test Folder 2",
 			isFolder: true,
 			parentId: 1,
+			level: 1,
+
 			isOpen: false,
 			order: null
 		},
-		{ id: 5, title: "test_file_3", isFolder: false, parentId: 4, isOpen: false, order: 1 }
+		{ id: 5, title: "test_file_3", isFolder: false, parentId: 4, level: 2, isOpen: false, order: 1 }
 	]);
 
 	const [displayedFile, setDisplayedFile] = useState({});
@@ -59,6 +67,31 @@ export const FileProvider = ({ children }) => {
 		setFileTree(fileTree.map(file => (file.id === id ? { ...file, isOpen: true } : file)));
 	};
 
+	const moveFile = (title, toTitle) => {
+		const file = fileTree.find(file => file.title === title);
+		let toFile = fileTree.find(file => file.title === toTitle);
+
+		console.log(`Move ${title} to ${toTitle}`);
+
+		if (!toFile.isFolder) {
+			console.log("TARGET IS FILE");
+
+			const toFileParent = getFileParent(toFile);
+			toFile = toFileParent;
+		}
+
+		if ((file.level < toFile.level && file.isFolder) || file.id === toFile.id) return;
+
+		console.log("INFO", file, toFile);
+		setFileTree(
+			fileTree.map(f => (f.id === file.id ? { ...file, level: toFile.level, parentId: toFile.id } : f))
+		);
+	};
+
+	const moveFileToRoot = title => {
+		console.log("TO ROOT " + title);
+	};
+
 	const displayFile = id => {
 		setDisplayedFile(fileTree.find(file => file.id === id));
 	};
@@ -75,9 +108,23 @@ export const FileProvider = ({ children }) => {
 		return fileTree.filter(file => !file.isFolder);
 	};
 
+	const getFileParent = file => {
+		return fileTree.find(f => f.id === file.parentId);
+	};
+
 	return (
 		<FileContext.Provider
-			value={{ fileTree, getFileOnlyTree, displayedFile, displayFile, closeFile, openFile, toggleFolder }}
+			value={{
+				fileTree,
+				getFileOnlyTree,
+				displayedFile,
+				displayFile,
+				closeFile,
+				openFile,
+				moveFile,
+				moveFileToRoot,
+				toggleFolder
+			}}
 		>
 			{children}
 		</FileContext.Provider>
