@@ -17,7 +17,7 @@ const File = ({ id, title, level, levelIndentStep, onClick, isOpen, isFolder, ch
 					{...props}
 					className="folder-title"
 					onClick={() => onClick(id)}
-					onContextMenu={e => onMenuClick(e, "folder", "right")}
+					onContextMenu={e => onMenuClick(e, "folder", id)}
 					style={{ paddingLeft: `${level * levelIndentStep}px` }}
 				>
 					<Icon type="arrow" style={isOpen ? "arrow-open" : "arrow"} />
@@ -31,7 +31,7 @@ const File = ({ id, title, level, levelIndentStep, onClick, isOpen, isFolder, ch
 			{...props}
 			className="file"
 			style={{ paddingLeft: `${level * levelIndentStep}px` }}
-			onContextMenu={e => onMenuClick(e, "file")}
+			onContextMenu={e => onMenuClick(e, "file", id)}
 			onDoubleClick={() => openFile(id)}
 		>
 			{title}
