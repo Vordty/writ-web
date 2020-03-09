@@ -92,6 +92,26 @@ export const FileProvider = ({ children }) => {
 		console.log("TO ROOT " + title);
 	};
 
+	const renameFile = () => {
+		console.log("Rename File");
+	};
+
+	const copyFile = () => {
+		console.log("Copy File");
+	};
+
+	const deleteFile = () => {
+		console.log("Delete File");
+	};
+
+	const createFile = () => {
+		console.log("Create File");
+	};
+
+	const createFolder = () => {
+		console.log("Create Folder");
+	};
+
 	const displayFile = id => {
 		setDisplayedFile(fileTree.find(file => file.id === id));
 	};
@@ -120,10 +140,15 @@ export const FileProvider = ({ children }) => {
 				displayedFile,
 				displayFile,
 				closeFile,
+				toggleFolder,
 				openFile,
 				moveFile,
 				moveFileToRoot,
-				toggleFolder
+				renameFile,
+				copyFile,
+				deleteFile,
+				createFile,
+				createFolder
 			}}
 		>
 			{children}
