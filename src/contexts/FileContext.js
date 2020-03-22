@@ -9,45 +9,60 @@ export const FileProvider = ({ children }) => {
 			title: "Test Folder 1",
 			isFolder: true,
 			parentId: -1,
-			level: 0,
+			level: 1,
 
 			isOpen: false,
-			order: null
+			order: null,
+			isRenaming: false
 		},
 		{
 			id: 2,
 			title: "test_file_1",
 			isFolder: false,
 			parentId: 1,
-			level: 1,
+			level: 2,
 
 			isOpen: true,
-			order: 3
+			order: 3,
+			isRenaming: false
 		},
 		{
 			id: 3,
 			title: "test_file_2",
 			isFolder: false,
 			parentId: 1,
-			level: 1,
+			level: 2,
 
 			isOpen: true,
-			order: 2
+			order: 2,
+			isRenaming: false
 		},
 		{
 			id: 4,
 			title: "Test Folder 2",
 			isFolder: true,
 			parentId: 1,
-			level: 1,
+			level: 2,
 
 			isOpen: false,
-			order: null
+			order: null,
+			isRenaming: false
 		},
-		{ id: 5, title: "test_file_3", isFolder: false, parentId: 4, level: 2, isOpen: false, order: 1 }
+		{
+			id: 5,
+			title: "test_file_3",
+			isFolder: false,
+			parentId: 4,
+			level: 3,
+
+			isOpen: false,
+			order: 1,
+			isRenaming: false
+		}
 	]);
 
 	const [displayedFile, setDisplayedFile] = useState({});
+	const [isRenameStateActive, setIsRenameStateActive] = useState(false);
 
 	const closeFile = id => {
 		console.log("CLOSE FILE " + id);
@@ -84,7 +99,7 @@ export const FileProvider = ({ children }) => {
 
 		console.log("INFO", file, toFile);
 		setFileTree(
-			fileTree.map(f => (f.id === file.id ? { ...file, level: toFile.level, parentId: toFile.id } : f))
+			fileTree.map(f => (f.id === file.id ? { ...file, level: toFile.level + 1, parentId: toFile.id } : f))
 		);
 	};
 
@@ -92,8 +107,14 @@ export const FileProvider = ({ children }) => {
 		console.log("TO ROOT " + title);
 	};
 
-	const renameFile = () => {
-		console.log("Rename File");
+	const renameFile = id => {
+		setIsRenameStateActive(true);
+		setFileTree(fileTree.map(file => (file.id === id ? { ...file, isRenaming: true } : file)));
+	};
+
+	const turnOffRenameState = id => {
+		setIsRenameStateActive(false);
+		setFileTree(fileTree.map(file => (file.id === id ? { ...file, isRenaming: false } : file)));
 	};
 
 	const copyFile = () => {
@@ -124,6 +145,10 @@ export const FileProvider = ({ children }) => {
 		setFileTree(fileTree.map(file => (file.id === id ? { ...file, isOpen: !file.isOpen } : file)));
 	};
 
+	const getFileById = id => {
+		return fileTree.find(f => f.id === id);
+	};
+
 	const getFileOnlyTree = () => {
 		return fileTree.filter(file => !file.isFolder);
 	};
@@ -148,7 +173,9 @@ export const FileProvider = ({ children }) => {
 				copyFile,
 				deleteFile,
 				createFile,
-				createFolder
+				createFolder,
+				isRenameStateActive,
+				turnOffRenameState
 			}}
 		>
 			{children}
