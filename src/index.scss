@@ -185,3 +185,7 @@ $percent-increment: 1.5%;
 .cursor-pointer {
 	cursor: pointer;
 }
+
+.event-transparent {
+	pointer-events: none;
+}
