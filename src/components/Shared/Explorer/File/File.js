@@ -1,18 +1,38 @@
-import React, { Fragment, useContext, useRef } from "react";
+import React, { Fragment, useContext, useState, useRef } from "react";
 
 import Icon from "../../../Icon/Icon";
 import { ComponentContext } from "../../../../contexts/ComponentContext";
 import { FileContext } from "../../../../contexts/FileContext";
 
 import "./File.scss";
+import { useOutsideAlerter } from "helpers/OutsideClick";
 
-const File = ({ id, title, level, levelIndentStep, onClick, isOpen, isFolder, children, ...props }) => {
+const File = ({ file, levelIndentStep, onClick, children, ...props }) => {
+	const fileRef = useRef(null);
+	const { id, title, level, isOpen, isFolder, isRenaming } = file;
+
 	const { onMenuClick } = useContext(ComponentContext);
-	const { openFile } = useContext(FileContext);
+	const { openFile, turnOffRenameState } = useContext(FileContext);
+
+	useOutsideAlerter(fileRef, () => onFileOutsideClick(), ["resizable-drag-line"]);
+
+	const onFileOutsideClick = () => {
+		if (isRenaming) {
+			turnOffRenameState(id);
+		}
+	};
+
+	let folderClassName = "folder";
+	let fileClassName = "file";
+
+	if (isRenaming) {
+		folderClassName += " folder-rename";
+		fileClassName += " file-rename";
+	}
 
 	return isFolder ? (
 		<Fragment>
-			<div className="folder">
+			<div className={folderClassName} ref={fileRef}>
 				<div
 					{...props}
 					className="folder-title"
@@ -29,7 +49,8 @@ const File = ({ id, title, level, levelIndentStep, onClick, isOpen, isFolder, ch
 	) : (
 		<div
 			{...props}
-			className="file"
+			ref={fileRef}
+			className={fileClassName}
 			style={{ paddingLeft: `${level * levelIndentStep}px` }}
 			onContextMenu={e => onMenuClick(e, "file", id)}
 			onDoubleClick={() => openFile(id)}
