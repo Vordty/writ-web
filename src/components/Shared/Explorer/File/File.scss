@@ -1,5 +1,9 @@
 @import "../../../../constants/colors.scss";
 
+.explorer-body + .folder {
+	padding-top: 10px;
+}
+
 .file,
 .folder-title {
 	padding: 4px;
@@ -26,4 +30,9 @@
 	position: relative;
 	top: 4px;
 	padding-right: 8px;
+}
+
+.file-rename {
+	position: relative;
+	background-color: white;
 }
