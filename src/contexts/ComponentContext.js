@@ -45,7 +45,7 @@ export const ComponentProvider = ({ children }) => {
 	};
 
 	const getContextMenuItems = () => {
-		const result = MENU_SCHEMA(menuType, fileContext, passedItem);
+		const result = MENU_SCHEMA(menuType, fileContext, passedItem, hideContextMenu);
 
 		const items = result.map(item => (
 			<ContextMenuItem onClick={item.action} key={item.title}>
