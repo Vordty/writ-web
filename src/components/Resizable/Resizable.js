@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, Fragment } from "react";
 
 import "./Resizable.scss";
 
-const Resizable = ({ width, customStyle, minWidth, maxWidth, restrictionTop, children }) => {
+const Resizable = ({ width, customStyle, minWidth, maxWidth, restrictionTop, onWidthChange, children }) => {
 	const [resizableWidth, setResizableWidth] = useState(width);
 	const [isResizing, setIsResizing] = useState(false);
 
@@ -35,6 +35,7 @@ const Resizable = ({ width, customStyle, minWidth, maxWidth, restrictionTop, chi
 	const onMouseMove = e => {
 		if (isInRange(e)) {
 			setResizableWidth(`${e.clientX - resizableRef.current.getBoundingClientRect().left}px`);
+			onWidthChange(e.clientX - resizableRef.current.getBoundingClientRect().left);
 		}
 	};
 
