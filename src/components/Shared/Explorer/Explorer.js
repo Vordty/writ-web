@@ -1,19 +1,38 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 
 import File from "./File/File";
 import ListDraggable from "../../List/ListDraggable/ListDraggable";
 
 import "./Explorer.scss";
 import Icon from "../../Icon/Icon";
+import Overlay from "components/Overlay/Overlay";
 
 import { ComponentContext } from "../../../contexts/ComponentContext";
 import { FileContext } from "../../../contexts/FileContext";
 
-const Explorer = () => {
-	const { onMenuClick } = useContext(ComponentContext);
-	const { fileTree, toggleFolder, moveFile, moveFileToRoot } = useContext(FileContext);
+const levelIndentStep = 20;
 
-	const levelIndentStep = 20;
+const Explorer = ({ contentWidth }) => {
+	const explorerBodyRef = useRef(null);
+
+	const { onMenuClick } = useContext(ComponentContext);
+	const { fileTree, toggleFolder, moveFile, moveFileToRoot, isRenameStateActive } = useContext(FileContext);
+
+	const [overlayDimensions, setOverlayDimensions] = useState({ width: 0, height: 0 });
+
+	useEffect(() => {
+		console.log("explorerBodyRef", explorerBodyRef.current.childNodes);
+		if (
+			explorerBodyRef.current.childNodes[0].className === "folder" ||
+			explorerBodyRef.current.childNodes[0].className === "file"
+		) {
+			explorerBodyRef.current.childNodes[0].style.paddingTop = "10px";
+		}
+		setOverlayDimensions({
+			width: contentWidth,
+			height: explorerBodyRef.current.clientHeight
+		});
+	}, [explorerBodyRef, contentWidth]);
 
 	let startTarget;
 	const onDragStart = e => {
@@ -27,7 +46,7 @@ const Explorer = () => {
 		e.preventDefault();
 	};
 
-	const onDrop = (e, isRoot) => {
+	const onDrop = e => {
 		e.persist();
 		e.preventDefault();
 
@@ -42,44 +61,38 @@ const Explorer = () => {
 
 	const renderExplorerBody = () => {
 		const items = [];
-		const level = 1;
 
 		const topLevelFiles = fileTree.filter(item => item.parentId === -1);
 		topLevelFiles.map(item => {
 			if (item.isFolder) {
-				items.push(renderFolder(item, level));
+				items.push(renderFolder(item));
 			}
 		});
 
 		return items;
 	};
 
-	const renderFile = ({ id, title }, level) => {
-		return <File draggable key={id} id={id} title={title} level={level} levelIndentStep={levelIndentStep} />;
+	const renderFile = file => {
+		return <File draggable key={file.id} file={file} levelIndentStep={levelIndentStep} />;
 	};
 
-	const renderFolder = ({ id, title, isOpen, isFolder }, level) => {
-		const folderChildren = fileTree.filter(item => item.parentId === id);
+	const renderFolder = folder => {
+		const folderChildren = fileTree.filter(item => item.parentId === folder.id);
 
 		return (
 			<File
 				draggable
-				key={id}
-				id={id}
-				title={title}
-				isOpen={isOpen}
-				level={level}
-				isOpen={isOpen}
-				isFolder={isFolder}
+				key={folder.id}
+				file={folder}
 				levelIndentStep={levelIndentStep}
-				onClick={() => toggleFolder(id)}
+				onClick={() => toggleFolder(folder.id)}
 			>
 				{folderChildren.map(item => {
 					const items = [];
 					if (item.isFolder) {
-						items.push(renderFolder(item, level + 1));
+						items.push(renderFolder(item));
 					} else {
-						items.push(renderFile(item, level + 1));
+						items.push(renderFile(item));
 					}
 
 					return items;
@@ -88,13 +101,24 @@ const Explorer = () => {
 		);
 	};
 
+	let explorerBodyProps = {};
+	if (!isRenameStateActive) {
+		explorerBodyProps = { onDragOver: onDragOver, onDrop: onDrop, onDragStart: onDragStart };
+	}
+
 	return (
 		<div className="explorer">
 			<div className="project-title">
 				<div className="project-title-text">Interstellar</div>
 				<Icon type="dot3" onClick={e => onMenuClick(e, "projectTitle")} />
 			</div>
-			<div className="explorer-body" onDragOver={onDragOver} onDrop={onDrop} onDragStart={onDragStart}>
+			<div className="explorer-body" ref={explorerBodyRef} {...explorerBodyProps}>
+				{isRenameStateActive && (
+					<Overlay
+						customStyle="event-transparent"
+						style={{ width: overlayDimensions.width, height: overlayDimensions.height }}
+					/>
+				)}
 				{renderExplorerBody()}
 			</div>
 		</div>
