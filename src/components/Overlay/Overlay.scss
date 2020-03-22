@@ -3,4 +3,10 @@
 	background-color: rgba(0, 0, 0, 0.7);
 	width: 100vw;
 	height: 100vh;
+
+	&.explorer {
+		position: static;
+		width: 0;
+		height: 0;
+	}
 }
