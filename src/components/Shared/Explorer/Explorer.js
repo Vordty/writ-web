@@ -16,7 +16,7 @@ const Explorer = ({ contentWidth }) => {
 	const explorerBodyRef = useRef(null);
 
 	const { onMenuClick } = useContext(ComponentContext);
-	const { fileTree, toggleFolder, moveFile, moveFileToRoot, isRenameStateActive } = useContext(FileContext);
+	const { fileTree, toggleFolder, moveFile, moveFileToRoot, renameStateInfo } = useContext(FileContext);
 
 	const [overlayDimensions, setOverlayDimensions] = useState({ width: 0, height: 0 });
 
@@ -101,7 +101,7 @@ const Explorer = ({ contentWidth }) => {
 	};
 
 	let explorerBodyProps = {};
-	if (!isRenameStateActive) {
+	if (!renameStateInfo.isActive) {
 		explorerBodyProps = { onDragOver: onDragOver, onDrop: onDrop, onDragStart: onDragStart };
 	}
 
@@ -112,9 +112,9 @@ const Explorer = ({ contentWidth }) => {
 				<Icon type="dot3" onClick={e => onMenuClick(e, "projectTitle")} />
 			</div>
 			<div className="explorer-body" ref={explorerBodyRef} {...explorerBodyProps}>
-				{isRenameStateActive && (
+				{renameStateInfo.isActive && (
 					<Overlay
-						customStyle="event-transparent"
+						customStyle="event-transparent explorer"
 						style={{ width: overlayDimensions.width, height: overlayDimensions.height }}
 					/>
 				)}
