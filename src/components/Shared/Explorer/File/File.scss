@@ -8,10 +8,6 @@
 .folder-title {
 	padding: 4px;
 	transition: background-color 0.2s ease-in-out;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
-
 	&:hover {
 		background-color: $fade-light;
 	}
@@ -32,7 +28,11 @@
 	padding-right: 8px;
 }
 
-.file-rename {
+.file-rename,
+.folder-rename {
 	position: relative;
 	background-color: white;
+	padding: 4px;
+	border: none;
+	font-size: 16px;
 }
