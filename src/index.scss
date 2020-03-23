@@ -189,3 +189,14 @@ $percent-increment: 1.5%;
 .event-transparent {
 	pointer-events: none;
 }
+
+.one-liner {
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.overflow-dots {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
