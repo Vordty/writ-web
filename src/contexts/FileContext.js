@@ -12,8 +12,7 @@ export const FileProvider = ({ children }) => {
 			level: 1,
 
 			isOpen: false,
-			order: null,
-			isRenaming: false
+			order: null
 		},
 		{
 			id: 2,
@@ -23,8 +22,7 @@ export const FileProvider = ({ children }) => {
 			level: 2,
 
 			isOpen: true,
-			order: 3,
-			isRenaming: false
+			order: 3
 		},
 		{
 			id: 3,
@@ -34,8 +32,7 @@ export const FileProvider = ({ children }) => {
 			level: 2,
 
 			isOpen: true,
-			order: 2,
-			isRenaming: false
+			order: 2
 		},
 		{
 			id: 4,
@@ -45,8 +42,7 @@ export const FileProvider = ({ children }) => {
 			level: 2,
 
 			isOpen: false,
-			order: null,
-			isRenaming: false
+			order: null
 		},
 		{
 			id: 5,
@@ -56,13 +52,19 @@ export const FileProvider = ({ children }) => {
 			level: 3,
 
 			isOpen: false,
-			order: 1,
-			isRenaming: false
+			order: 1
 		}
 	]);
 
 	const [displayedFile, setDisplayedFile] = useState({});
-	const [isRenameStateActive, setIsRenameStateActive] = useState(false);
+	const [renameStateInfo, setRenameStateInfo] = useState({
+		isActive: false,
+		fileId: null
+	});
+
+	useEffect(() => {
+		console.log("FILE TREE CHANGED", fileTree);
+	}, [fileTree]);
 
 	const closeFile = id => {
 		console.log("CLOSE FILE " + id);
@@ -108,13 +110,23 @@ export const FileProvider = ({ children }) => {
 	};
 
 	const renameFile = id => {
-		setIsRenameStateActive(true);
-		setFileTree(fileTree.map(file => (file.id === id ? { ...file, isRenaming: true } : file)));
+		setRenameStateInfo({ isActive: true, fileId: id });
+	};
+
+	const changeFileTitle = (id, newTitle) => {
+		const fileTreeCopy = fileTree.slice();
+
+		for (let file in fileTreeCopy) {
+			if (fileTreeCopy[file].id === id) {
+				fileTreeCopy[file].title = newTitle;
+			}
+		}
+
+		setFileTree(fileTreeCopy);
 	};
 
 	const turnOffRenameState = id => {
-		setIsRenameStateActive(false);
-		setFileTree(fileTree.map(file => (file.id === id ? { ...file, isRenaming: false } : file)));
+		setRenameStateInfo({ isActive: false, fileId: null });
 	};
 
 	const copyFile = () => {
@@ -170,11 +182,12 @@ export const FileProvider = ({ children }) => {
 				moveFile,
 				moveFileToRoot,
 				renameFile,
+				changeFileTitle,
 				copyFile,
 				deleteFile,
 				createFile,
 				createFolder,
-				isRenameStateActive,
+				renameStateInfo,
 				turnOffRenameState
 			}}
 		>
