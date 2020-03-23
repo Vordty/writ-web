@@ -29,10 +29,10 @@ const OpenedFiles = ({ children, style }) => {
 							className="opened-file-inner"
 							onClick={() => displayFile(openedFile.id)}
 						>
-							{openedFile.title}
+							<div className="overflow-dots">{openedFile.title}</div>
 							<Icon
 								type="x"
-								style="opened-file-x cursor-pointer"
+								customStyle="opened-file-x cursor-pointer"
 								onClick={() => closeFile(openedFile.id)}
 							/>
 						</div>
