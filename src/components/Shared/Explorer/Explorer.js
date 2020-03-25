@@ -16,7 +16,9 @@ const Explorer = ({ contentWidth }) => {
 	const explorerBodyRef = useRef(null);
 
 	const { onMenuClick } = useContext(ComponentContext);
-	const { getFileTree, toggleFolder, moveFile, moveFileToRoot, renameStateInfo } = useContext(FileContext);
+	const { fileTree, getFileTree, toggleFolder, moveFile, moveFileToRoot, renameStateInfo } = useContext(
+		FileContext
+	);
 
 	const [overlayDimensions, setOverlayDimensions] = useState({ width: 0, height: 0 });
 
@@ -31,7 +33,7 @@ const Explorer = ({ contentWidth }) => {
 			width: contentWidth,
 			height: explorerBodyRef.current.clientHeight
 		});
-	}, [explorerBodyRef, contentWidth]);
+	}, [explorerBodyRef, contentWidth, fileTree]);
 
 	let startTarget;
 	const onDragStart = e => {

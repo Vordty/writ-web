@@ -88,7 +88,6 @@ export const FileProvider = ({ children }) => {
 		console.log("OPEN FILE " + id);
 
 		if (isAlreadyOpen(id)) {
-			console.log("IS ALREADY OPEN");
 			return;
 		}
 
@@ -100,15 +99,14 @@ export const FileProvider = ({ children }) => {
 		const file = fileTree.find(file => file.title === title);
 		let toFile = fileTree.find(file => file.title === toTitle);
 
-		console.log(`Move ${title} to ${toTitle}`);
+		if (!toFile) return;
 
 		if (!toFile.isFolder) {
-			console.log("TARGET IS FILE");
-
 			const toFileParent = getFileParent(toFile);
 			toFile = toFileParent;
 		}
 
+		if (!toFile) return;
 		if ((file.level < toFile.level && file.isFolder) || file.id === toFile.id) return;
 
 		console.log("INFO", file, toFile);
@@ -195,6 +193,7 @@ export const FileProvider = ({ children }) => {
 	return (
 		<FileContext.Provider
 			value={{
+				fileTree,
 				getFileTree,
 				getFileOnlyTree,
 				displayedFile,
