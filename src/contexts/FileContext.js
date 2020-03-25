@@ -1,12 +1,24 @@
 import React, { createContext, useState, useEffect } from "react";
 
+import { sortFiles } from "helpers/SortFiles";
+
 export const FileContext = createContext();
 
 export const FileProvider = ({ children }) => {
 	const [fileTree, setFileTree] = useState([
 		{
 			id: 1,
-			title: "Test Folder 1",
+			title: "B Test Folder 1",
+			isFolder: true,
+			parentId: -1,
+			level: 1,
+
+			isOpen: false,
+			order: null
+		},
+		{
+			id: 40,
+			title: "A Test Folder 7",
 			isFolder: true,
 			parentId: -1,
 			level: 1,
@@ -16,7 +28,7 @@ export const FileProvider = ({ children }) => {
 		},
 		{
 			id: 2,
-			title: "test_file_1",
+			title: "C test_file_1",
 			isFolder: false,
 			parentId: 1,
 			level: 2,
@@ -26,7 +38,7 @@ export const FileProvider = ({ children }) => {
 		},
 		{
 			id: 3,
-			title: "test_file_2",
+			title: "B test_file_2",
 			isFolder: false,
 			parentId: 1,
 			level: 2,
@@ -56,15 +68,15 @@ export const FileProvider = ({ children }) => {
 		}
 	]);
 
+	const getFileTree = () => {
+		return sortFiles(fileTree);
+	};
+
 	const [displayedFile, setDisplayedFile] = useState({});
 	const [renameStateInfo, setRenameStateInfo] = useState({
 		isActive: false,
 		fileId: null
 	});
-
-	useEffect(() => {
-		console.log("FILE TREE CHANGED", fileTree);
-	}, [fileTree]);
 
 	const closeFile = id => {
 		console.log("CLOSE FILE " + id);
@@ -107,6 +119,17 @@ export const FileProvider = ({ children }) => {
 
 	const moveFileToRoot = title => {
 		console.log("TO ROOT " + title);
+
+		const fileTreeCopy = fileTree.slice();
+
+		for (let file in fileTreeCopy) {
+			if (fileTreeCopy[file].title === title) {
+				fileTreeCopy[file].level = 1;
+				fileTreeCopy[file].parentId = -1;
+			}
+		}
+
+		setFileTree(fileTreeCopy);
 	};
 
 	const renameFile = id => {
@@ -125,7 +148,7 @@ export const FileProvider = ({ children }) => {
 		setFileTree(fileTreeCopy);
 	};
 
-	const turnOffRenameState = id => {
+	const turnOffRenameState = () => {
 		setRenameStateInfo({ isActive: false, fileId: null });
 	};
 
@@ -172,7 +195,7 @@ export const FileProvider = ({ children }) => {
 	return (
 		<FileContext.Provider
 			value={{
-				fileTree,
+				getFileTree,
 				getFileOnlyTree,
 				displayedFile,
 				displayFile,
