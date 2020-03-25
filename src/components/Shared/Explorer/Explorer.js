@@ -16,7 +16,7 @@ const Explorer = ({ contentWidth }) => {
 	const explorerBodyRef = useRef(null);
 
 	const { onMenuClick } = useContext(ComponentContext);
-	const { fileTree, toggleFolder, moveFile, moveFileToRoot, renameStateInfo } = useContext(FileContext);
+	const { getFileTree, toggleFolder, moveFile, moveFileToRoot, renameStateInfo } = useContext(FileContext);
 
 	const [overlayDimensions, setOverlayDimensions] = useState({ width: 0, height: 0 });
 
@@ -36,8 +36,6 @@ const Explorer = ({ contentWidth }) => {
 	let startTarget;
 	const onDragStart = e => {
 		e.persist();
-		console.log("ON DRAG EVENT", e);
-
 		startTarget = e.target;
 	};
 
@@ -49,8 +47,6 @@ const Explorer = ({ contentWidth }) => {
 		e.persist();
 		e.preventDefault();
 
-		console.log("ON DROP", e);
-
 		if (e.target.className === "explorer-body") {
 			moveFileToRoot(startTarget.innerText);
 		} else {
@@ -61,10 +57,12 @@ const Explorer = ({ contentWidth }) => {
 	const renderExplorerBody = () => {
 		const items = [];
 
-		const topLevelFiles = fileTree.filter(item => item.parentId === -1);
+		const topLevelFiles = getFileTree().filter(item => item.parentId === -1);
 		topLevelFiles.map(item => {
 			if (item.isFolder) {
 				items.push(renderFolder(item));
+			} else {
+				items.push(renderFile(item));
 			}
 		});
 
@@ -76,7 +74,7 @@ const Explorer = ({ contentWidth }) => {
 	};
 
 	const renderFolder = folder => {
-		const folderChildren = fileTree.filter(item => item.parentId === folder.id);
+		const folderChildren = getFileTree().filter(item => item.parentId === folder.id);
 
 		return (
 			<File
