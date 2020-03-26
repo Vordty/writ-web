@@ -1,11 +1,11 @@
 const MENU_SCHEMA = (type, actions, item, callback) => {
-	const { renameFile, copyFile, deleteFile, createFile, createFolder } = actions;
+	const { renameFile, copyFile, pasteFile, deleteFile, deleteFolder, createFile, createFolder } = actions;
 
 	const FILE_SCHEMA = [
 		{
 			title: "Copy",
 			action: () => {
-				copyFile();
+				copyFile(item);
 				callback();
 			}
 		},
@@ -19,7 +19,7 @@ const MENU_SCHEMA = (type, actions, item, callback) => {
 		{
 			title: "Delete",
 			action: () => {
-				deleteFile();
+				deleteFile(item);
 				callback();
 			}
 		}
@@ -29,14 +29,28 @@ const MENU_SCHEMA = (type, actions, item, callback) => {
 		{
 			title: "New File",
 			action: () => {
-				createFile();
+				createFile(item);
 				callback();
 			}
 		},
 		{
 			title: "New Folder",
 			action: () => {
-				createFolder();
+				createFolder(item);
+				callback();
+			}
+		},
+		{
+			title: "Copy",
+			action: () => {
+				copyFile(item);
+				callback();
+			}
+		},
+		{
+			title: "Paste",
+			action: () => {
+				pasteFile(item);
 				callback();
 			}
 		},
@@ -50,7 +64,7 @@ const MENU_SCHEMA = (type, actions, item, callback) => {
 		{
 			title: "Delete",
 			action: () => {
-				deleteFile();
+				deleteFolder(item);
 				callback();
 			}
 		}

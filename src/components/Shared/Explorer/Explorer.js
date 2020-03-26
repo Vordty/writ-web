@@ -23,6 +23,8 @@ const Explorer = ({ contentWidth }) => {
 	const [overlayDimensions, setOverlayDimensions] = useState({ width: 0, height: 0 });
 
 	useEffect(() => {
+		if (fileTree.length === 0) return;
+
 		if (
 			explorerBodyRef.current.childNodes[0].className === "folder" ||
 			explorerBodyRef.current.childNodes[0].className === "file"
