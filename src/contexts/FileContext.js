@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 
-import { sortFiles } from "helpers/SortFiles";
+import { sortFiles, getBranchMembers } from "helpers/FileContextHelpers";
 
 export const FileContext = createContext();
 
@@ -75,8 +75,10 @@ export const FileProvider = ({ children }) => {
 	const [displayedFile, setDisplayedFile] = useState({});
 	const [renameStateInfo, setRenameStateInfo] = useState({
 		isActive: false,
-		fileId: null
+		fileId: null,
+		firstTime: false
 	});
+	const [copiedItem, setCopiedItem] = useState({});
 
 	const closeFile = id => {
 		console.log("CLOSE FILE " + id);
@@ -131,7 +133,7 @@ export const FileProvider = ({ children }) => {
 	};
 
 	const renameFile = id => {
-		setRenameStateInfo({ isActive: true, fileId: id });
+		setRenameStateInfo({ isActive: true, fileId: id, firstTime: false });
 	};
 
 	const changeFileTitle = (id, newTitle) => {
@@ -147,23 +149,97 @@ export const FileProvider = ({ children }) => {
 	};
 
 	const turnOffRenameState = () => {
-		setRenameStateInfo({ isActive: false, fileId: null });
+		setRenameStateInfo({ isActive: false, fileId: null, firstTime: false });
 	};
 
-	const copyFile = () => {
-		console.log("Copy File");
+	const copyFile = id => {
+		console.log("Copy File", id);
+
+		let file = fileTree.find(file => file.id === id);
+		console.log("FILE TO BE COPIED", file);
+
+		setCopiedItem(file);
 	};
 
-	const deleteFile = () => {
-		console.log("Delete File");
+	const pasteFile = id => {
+		console.log("Paste File In", id);
+
+		const fileTreeCopy = fileTree.slice();
+
+		let parentFile = fileTree.find(file => file.id === id);
+
+		for (let file in fileTreeCopy) {
+			if (fileTreeCopy[file].id === copiedItem.id) {
+				fileTreeCopy[file].parentId = id;
+				fileTreeCopy[file].level = parentFile.level + 1;
+			}
+		}
+
+		console.log("fileTreeCopy", fileTreeCopy);
+		setFileTree(fileTreeCopy);
 	};
 
-	const createFile = () => {
-		console.log("Create File");
+	const deleteFile = id => {
+		console.log("Delete File", id);
+
+		const fileTreeCopy = fileTree.filter(file => file.id !== id);
+
+		setFileTree(fileTreeCopy);
 	};
 
-	const createFolder = () => {
+	const deleteFolder = id => {
+		console.log("Delete File", id);
+
+		const branchMembers = getBranchMembers(id, fileTree);
+
+		const fileTreeCopy = fileTree.filter(file => !branchMembers.includes(file));
+		console.log("fileTreeCopy", fileTreeCopy);
+
+		setFileTree(fileTreeCopy);
+	};
+
+	const createFile = parentId => {
+		console.log("Create File", parentId);
+
+		let parentFile = fileTree.find(file => file.id === parentId);
+
+		const newFile = {
+			id: Math.random(),
+			title: "",
+			isFolder: false,
+			parentId: parentId,
+			level: parentFile.level + 1,
+
+			isOpen: false,
+			order: null
+		};
+
+		setFileTree([...fileTree, newFile]);
+
+		setRenameStateInfo({ isActive: true, fileId: newFile.id, firstTime: true });
+	};
+
+	const createFolder = parentId => {
 		console.log("Create Folder");
+
+		let parentFile = fileTree.find(file => file.id === parentId);
+
+		console.log("PARENT FILE", parentFile);
+
+		const newFolder = {
+			id: Math.random(),
+			title: "",
+			isFolder: true,
+			parentId: parentId,
+			level: parentFile.level + 1,
+
+			isOpen: false,
+			order: null
+		};
+
+		setFileTree([...fileTree, newFolder]);
+
+		setRenameStateInfo({ isActive: true, fileId: newFolder.id, firstTime: true });
 	};
 
 	const displayFile = id => {
@@ -206,7 +282,9 @@ export const FileProvider = ({ children }) => {
 				renameFile,
 				changeFileTitle,
 				copyFile,
+				pasteFile,
 				deleteFile,
+				deleteFolder,
 				createFile,
 				createFolder,
 				renameStateInfo,
