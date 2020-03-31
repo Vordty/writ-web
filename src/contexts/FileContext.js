@@ -1,72 +1,17 @@
 import React, { createContext, useState, useEffect } from "react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import { sortFiles, getBranchMembers } from "helpers/FileContextHelpers";
+import { UPDATE_FILETREE, GET_FILETREE } from "queries/FileQueries";
 
 export const FileContext = createContext();
 
 export const FileProvider = ({ children }) => {
-	const [fileTree, setFileTree] = useState([
-		{
-			id: 1,
-			title: "B Test Folder 1",
-			isFolder: true,
-			parentId: -1,
-			level: 1,
+	const { loading, error, data } = useQuery(GET_FILETREE);
 
-			isOpen: false,
-			order: null
-		},
-		{
-			id: 40,
-			title: "A Test Folder 7",
-			isFolder: true,
-			parentId: -1,
-			level: 1,
+	const [updateFileTreeMutation] = useMutation(UPDATE_FILETREE);
 
-			isOpen: false,
-			order: null
-		},
-		{
-			id: 2,
-			title: "C test_file_1",
-			isFolder: false,
-			parentId: 1,
-			level: 2,
-
-			isOpen: true,
-			order: 3
-		},
-		{
-			id: 3,
-			title: "B test_file_2",
-			isFolder: false,
-			parentId: 1,
-			level: 2,
-
-			isOpen: true,
-			order: 2
-		},
-		{
-			id: 4,
-			title: "Test Folder 2",
-			isFolder: true,
-			parentId: 1,
-			level: 2,
-
-			isOpen: false,
-			order: null
-		},
-		{
-			id: 5,
-			title: "test_file_3",
-			isFolder: false,
-			parentId: 4,
-			level: 3,
-
-			isOpen: false,
-			order: 1
-		}
-	]);
+	const [fileTree, setFileTree] = useState([]);
 
 	const getFileTree = () => {
 		return sortFiles(fileTree);
@@ -79,6 +24,31 @@ export const FileProvider = ({ children }) => {
 		firstTime: false
 	});
 	const [copiedItem, setCopiedItem] = useState({});
+
+	useEffect(() => {
+		if (data) {
+			console.log("QUERY DATA", data);
+			setFileTree(data.fileTree.data);
+		}
+	}, [data]);
+
+	//#region ERROR HANDLING
+
+	if (loading) return "Loading...";
+	if (error) return `Error! ${error.message}`;
+
+	//#endregion
+
+	const updateFileTree = async newData => {
+		const result = await updateFileTreeMutation({
+			variables: {
+				id: data.fileTree.id,
+				data: newData
+			}
+		});
+
+		console.log("MUTATION RESULT", result);
+	};
 
 	const closeFile = id => {
 		console.log("CLOSE FILE " + id);
@@ -202,13 +172,18 @@ export const FileProvider = ({ children }) => {
 		console.log("Create File", parentId);
 
 		let parentFile = fileTree.find(file => file.id === parentId);
+		let level = 1;
+
+		if (parentId !== -1) {
+			level = parentFile.level + 1;
+		}
 
 		const newFile = {
 			id: Math.random(),
 			title: "",
 			isFolder: false,
 			parentId: parentId,
-			level: parentFile.level + 1,
+			level: level,
 
 			isOpen: false,
 			order: null
@@ -217,12 +192,19 @@ export const FileProvider = ({ children }) => {
 		setFileTree([...fileTree, newFile]);
 
 		setRenameStateInfo({ isActive: true, fileId: newFile.id, firstTime: true });
+
+		updateFileTree([...fileTree, newFile]);
 	};
 
 	const createFolder = parentId => {
-		console.log("Create Folder");
+		console.log("Create Folder", parentId);
 
 		let parentFile = fileTree.find(file => file.id === parentId);
+		let level = 1;
+
+		if (parentId !== -1) {
+			level = parentFile.level + 1;
+		}
 
 		console.log("PARENT FILE", parentFile);
 
@@ -231,7 +213,7 @@ export const FileProvider = ({ children }) => {
 			title: "",
 			isFolder: true,
 			parentId: parentId,
-			level: parentFile.level + 1,
+			level: level,
 
 			isOpen: false,
 			order: null
