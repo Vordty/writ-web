@@ -70,6 +70,23 @@ const MENU_SCHEMA = (type, actions, item, callback) => {
 		}
 	];
 
+	const FILE_ROOT_SCHEMA = [
+		{
+			title: "New File",
+			action: () => {
+				createFile(item);
+				callback();
+			}
+		},
+		{
+			title: "New Folder",
+			action: () => {
+				createFolder(item);
+				callback();
+			}
+		}
+	];
+
 	const PROJECT_TITLE_SCHEMA = [{ title: "Rename", action: () => console.log("RENAME FILE ACTION") }];
 
 	const getSchema = type => {
@@ -78,6 +95,8 @@ const MENU_SCHEMA = (type, actions, item, callback) => {
 				return FILE_SCHEMA;
 			case "folder":
 				return FOLDER_SCHEMA;
+			case "root":
+				return FILE_ROOT_SCHEMA;
 			case "projectTitle":
 				return PROJECT_TITLE_SCHEMA;
 		}
