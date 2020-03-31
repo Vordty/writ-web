@@ -15,11 +15,7 @@ export const UPDATE_FILETREE = gql`
 		updateFileTree(id: $id, data: $data) {
 			success
 			message
-			fileTree {
-				id
-				data
-				projectId
-			}
+			data
 		}
 	}
 `;
