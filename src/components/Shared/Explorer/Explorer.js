@@ -113,7 +113,12 @@ const Explorer = ({ contentWidth }) => {
 				<div className="project-title-text">Interstellar</div>
 				<Icon type="dot3" onClick={e => onMenuClick(e, "projectTitle")} />
 			</div>
-			<div className="explorer-body" ref={explorerBodyRef} {...explorerBodyProps}>
+			<div
+				className="explorer-body"
+				ref={explorerBodyRef}
+				{...explorerBodyProps}
+				onContextMenu={e => onMenuClick(e, "root", -1)}
+			>
 				{renameStateInfo.isActive && (
 					<Overlay
 						customStyle="event-transparent explorer"
