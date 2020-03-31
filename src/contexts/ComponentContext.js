@@ -38,6 +38,7 @@ export const ComponentProvider = ({ children }) => {
 	const onMenuClick = (e, type, fileId) => {
 		e.persist();
 		e.preventDefault();
+		e.stopPropagation();
 		setLastEvent(e);
 		setPassedItem(fileId);
 		setMenuType(type);
