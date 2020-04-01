@@ -25,6 +25,8 @@ const Explorer = ({ contentWidth }) => {
 	useEffect(() => {
 		if (fileTree.length === 0) return;
 
+		if (explorerBodyRef.current === null) return;
+
 		if (
 			explorerBodyRef.current.childNodes[0].className === "folder" ||
 			explorerBodyRef.current.childNodes[0].className === "file"
