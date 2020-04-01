@@ -81,10 +81,17 @@ export const FileProvider = ({ children }) => {
 		if (!toFile) return;
 		if ((file.level < toFile.level && file.isFolder) || file.id === toFile.id) return;
 
-		console.log("INFO", file, toFile);
-		setFileTree(
-			fileTree.map(f => (f.id === file.id ? { ...file, level: toFile.level + 1, parentId: toFile.id } : f))
-		);
+		const fileTreeCopy = fileTree.slice();
+
+		for (let _file in fileTreeCopy) {
+			if (fileTreeCopy[_file].id === file.id) {
+				fileTreeCopy[_file].level = toFile.level + 1;
+				fileTreeCopy[_file].parentId = toFile.id;
+			}
+		}
+
+		setFileTree(fileTreeCopy);
+		updateFileTree(fileTreeCopy);
 	};
 
 	const moveFileToRoot = title => {
@@ -100,6 +107,7 @@ export const FileProvider = ({ children }) => {
 		}
 
 		setFileTree(fileTreeCopy);
+		updateFileTree(fileTreeCopy);
 	};
 
 	const renameFile = id => {
@@ -107,15 +115,21 @@ export const FileProvider = ({ children }) => {
 	};
 
 	const changeFileTitle = (id, newTitle) => {
-		const fileTreeCopy = fileTree.slice();
+		let fileTreeCopy = fileTree.slice();
 
-		for (let file in fileTreeCopy) {
-			if (fileTreeCopy[file].id === id) {
-				fileTreeCopy[file].title = newTitle;
+		if (newTitle.length === 0) {
+			if (renameStateInfo.firstTime) {
+				deleteFile(id);
 			}
+		} else {
+			for (let file in fileTreeCopy) {
+				if (fileTreeCopy[file].id === id) {
+					fileTreeCopy[file].title = newTitle;
+				}
+			}
+			setFileTree(fileTreeCopy);
+			updateFileTree(fileTreeCopy);
 		}
-
-		setFileTree(fileTreeCopy);
 	};
 
 	const turnOffRenameState = () => {
@@ -145,8 +159,8 @@ export const FileProvider = ({ children }) => {
 			}
 		}
 
-		console.log("fileTreeCopy", fileTreeCopy);
 		setFileTree(fileTreeCopy);
+		updateFileTree(fileTreeCopy);
 	};
 
 	const deleteFile = id => {
@@ -155,6 +169,7 @@ export const FileProvider = ({ children }) => {
 		const fileTreeCopy = fileTree.filter(file => file.id !== id);
 
 		setFileTree(fileTreeCopy);
+		updateFileTree(fileTreeCopy);
 	};
 
 	const deleteFolder = id => {
@@ -166,45 +181,35 @@ export const FileProvider = ({ children }) => {
 		console.log("fileTreeCopy", fileTreeCopy);
 
 		setFileTree(fileTreeCopy);
+		updateFileTree(fileTreeCopy);
 	};
 
 	const createFile = parentId => {
 		console.log("Create File", parentId);
 
 		let parentFile = fileTree.find(file => file.id === parentId);
-		let level = 1;
-
-		if (parentId !== -1) {
-			level = parentFile.level + 1;
-		}
 
 		const newFile = {
 			id: Math.random(),
 			title: "",
 			isFolder: false,
 			parentId: parentId,
-			level: level,
 
 			isOpen: false,
 			order: null
 		};
 
+		console.log("NEW FILE", newFile);
+
 		setFileTree([...fileTree, newFile]);
 
 		setRenameStateInfo({ isActive: true, fileId: newFile.id, firstTime: true });
-
-		updateFileTree([...fileTree, newFile]);
 	};
 
 	const createFolder = parentId => {
 		console.log("Create Folder", parentId);
 
 		let parentFile = fileTree.find(file => file.id === parentId);
-		let level = 1;
-
-		if (parentId !== -1) {
-			level = parentFile.level + 1;
-		}
 
 		console.log("PARENT FILE", parentFile);
 
@@ -213,7 +218,6 @@ export const FileProvider = ({ children }) => {
 			title: "",
 			isFolder: true,
 			parentId: parentId,
-			level: level,
 
 			isOpen: false,
 			order: null
