@@ -24,7 +24,8 @@ export const getBranchMembers = (id, fileTree) => {
 	branchTopLevelChildren.map(file => {
 		if (file.isFolder) {
 			branchMembers.push(file);
-			getFolderChildren(file.id, branchMembers, fileTree);
+			const getFolderChildrenRec = trampoline(getFolderChildren);
+			getFolderChildrenRec(file.id, branchMembers, fileTree);
 		} else {
 			branchMembers.push(file);
 		}
@@ -38,12 +39,25 @@ export const getBranchMembers = (id, fileTree) => {
 const getFolderChildren = (id, container, fileTree) => {
 	const folderChildren = fileTree.filter(file => file.parentId === id);
 
+	let funcResult;
+
 	folderChildren.map(file => {
 		if (file.isFolder) {
 			container.push(file);
-			getFolderChildren(id, container, fileTree);
+			funcResult = () => getFolderChildren(file.id, container, fileTree);
 		} else {
 			container.push(file);
 		}
 	});
+
+	return funcResult;
+};
+
+const trampoline = fn => (...args) => {
+	let result = fn(...args);
+	while (typeof result === "function") {
+		result = result();
+	}
+
+	return result;
 };
