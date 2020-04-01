@@ -1,3 +1,5 @@
+import { trampoline } from "helpers/Trampoline";
+
 export const sortFiles = fileTree => {
 	let fileTreeCopy = fileTree.slice();
 
@@ -51,13 +53,4 @@ const getFolderChildren = (id, container, fileTree) => {
 	});
 
 	return funcResult;
-};
-
-const trampoline = fn => (...args) => {
-	let result = fn(...args);
-	while (typeof result === "function") {
-		result = result();
-	}
-
-	return result;
 };
