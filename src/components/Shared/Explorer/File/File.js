@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState, useRef } from "react";
+import React, { Fragment, useContext, useState, useRef, useEffect } from "react";
 
 import Icon from "../../../Icon/Icon";
 import { ComponentContext } from "../../../../contexts/ComponentContext";
@@ -19,6 +19,10 @@ const File = ({ file, levelIndentStep, onClick, children, ...props }) => {
 	useOutsideAlerter(fileRef, () => onRenameOutsideClick(), ["resizable-drag-line"]);
 
 	const isRenaming = renameStateInfo.isActive && renameStateInfo.fileId === id;
+
+	useEffect(() => {
+		setRenameText(title);
+	}, [isRenaming]);
 
 	const onRenameOutsideClick = () => {
 		if (isRenaming) {
