@@ -54,3 +54,29 @@ const getFolderChildren = (id, container, fileTree) => {
 
 	return funcResult;
 };
+
+export const getFileParent = (file, fileTree) => {
+	return fileTree.find(f => f.id === file.parentId);
+};
+
+export const getFileParentId = (id, fileTree) => {
+	if (!fileTree) return;
+
+	const file = fileTree.find(file => file.id === id);
+
+	return file.parentId;
+};
+
+export const getFileLevel = (id, fileTree) => {
+	if (!fileTree) return;
+
+	let level = 1;
+	let currentFileId = id;
+
+	while (getFileParentId(currentFileId, fileTree) !== -1) {
+		currentFileId = getFileParentId(currentFileId, fileTree);
+		level++;
+	}
+
+	return level;
+};
