@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
-import { sortFiles, getBranchMembers } from "helpers/FileContextHelpers";
+import { sortFiles, getBranchMembers, getFileParent, getFileLevel } from "helpers/FileContextHelpers";
 import { UPDATE_FILETREE, GET_FILETREE } from "queries/FileQueries";
 
 export const FileContext = createContext();
@@ -26,18 +26,23 @@ export const FileProvider = ({ children }) => {
 	const [copiedItem, setCopiedItem] = useState({});
 
 	useEffect(() => {
+		function onUnload(e) {
+			e.preventDefault();
+			updateFileTree(fileTree);
+		}
+		window.addEventListener("beforeunload", onUnload);
+
+		return () => {
+			window.removeEventListener("beforeunload", onUnload);
+		};
+	});
+
+	useEffect(() => {
 		if (data) {
 			console.log("QUERY DATA", data);
 			setFileTree(data.fileTree.data);
 		}
 	}, [data]);
-
-	//#region ERROR HANDLING
-
-	if (loading) return "Loading...";
-	if (error) return `Error! ${error.message}`;
-
-	//#endregion
 
 	const updateFileTree = async newData => {
 		const result = await updateFileTreeMutation({
@@ -49,6 +54,13 @@ export const FileProvider = ({ children }) => {
 
 		console.log("MUTATION RESULT", result);
 	};
+
+	//#region ERROR HANDLING
+
+	if (loading) return "Loading...";
+	if (error) return `Error! ${error.message}`;
+
+	//#endregion
 
 	const closeFile = id => {
 		console.log("CLOSE FILE " + id);
@@ -74,18 +86,21 @@ export const FileProvider = ({ children }) => {
 		if (!toFile) return;
 
 		if (!toFile.isFolder) {
-			const toFileParent = getFileParent(toFile);
+			const toFileParent = getFileParent(toFile, fileTree);
 			toFile = toFileParent;
 		}
 
 		if (!toFile) return;
-		if ((file.level < toFile.level && file.isFolder) || file.id === toFile.id) return;
+		if (
+			(getFileLevel(file.id, fileTree) < getFileLevel(toFile.id, fileTree) && file.isFolder) ||
+			file.id === toFile.id
+		)
+			return;
 
 		const fileTreeCopy = fileTree.slice();
 
 		for (let _file in fileTreeCopy) {
 			if (fileTreeCopy[_file].id === file.id) {
-				fileTreeCopy[_file].level = toFile.level + 1;
 				fileTreeCopy[_file].parentId = toFile.id;
 			}
 		}
@@ -101,7 +116,6 @@ export const FileProvider = ({ children }) => {
 
 		for (let file in fileTreeCopy) {
 			if (fileTreeCopy[file].title === title) {
-				fileTreeCopy[file].level = 1;
 				fileTreeCopy[file].parentId = -1;
 			}
 		}
@@ -155,7 +169,6 @@ export const FileProvider = ({ children }) => {
 		for (let file in fileTreeCopy) {
 			if (fileTreeCopy[file].id === copiedItem.id) {
 				fileTreeCopy[file].parentId = id;
-				fileTreeCopy[file].level = parentFile.level + 1;
 			}
 		}
 
@@ -240,16 +253,8 @@ export const FileProvider = ({ children }) => {
 		setFileTree(fileTree.map(file => (file.id === id ? { ...file, isOpen: !file.isOpen } : file)));
 	};
 
-	const getFileById = id => {
-		return fileTree.find(f => f.id === id);
-	};
-
 	const getFileOnlyTree = () => {
 		return fileTree.filter(file => !file.isFolder);
-	};
-
-	const getFileParent = file => {
-		return fileTree.find(f => f.id === file.parentId);
 	};
 
 	return (
