@@ -6,15 +6,17 @@ import { FileContext } from "../../../../contexts/FileContext";
 
 import "./File.scss";
 import { useOutsideAlerter } from "helpers/OutsideClick";
+import { getFileLevel } from "helpers/FileContextHelpers";
 
 const File = ({ file, levelIndentStep, onClick, children, ...props }) => {
 	const fileRef = useRef(null);
-	const { id, title, level, isOpen, isFolder } = file;
+	const { id, title, isOpen, isFolder } = file;
 
 	const [renameText, setRenameText] = useState(title);
+	const [level, setLevel] = useState(0);
 
 	const { onMenuClick } = useContext(ComponentContext);
-	const { openFile, turnOffRenameState, changeFileTitle, renameStateInfo } = useContext(FileContext);
+	const { fileTree, openFile, turnOffRenameState, changeFileTitle, renameStateInfo } = useContext(FileContext);
 
 	useOutsideAlerter(fileRef, () => onRenameOutsideClick(), ["resizable-drag-line"]);
 
@@ -23,6 +25,10 @@ const File = ({ file, levelIndentStep, onClick, children, ...props }) => {
 	useEffect(() => {
 		setRenameText(title);
 	}, [isRenaming]);
+
+	useEffect(() => {
+		setLevel(getFileLevel(id, fileTree));
+	}, [fileTree]);
 
 	const onRenameOutsideClick = () => {
 		if (isRenaming) {
