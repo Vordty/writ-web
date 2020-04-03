@@ -41,18 +41,31 @@ const File = ({ file, levelIndentStep, onClick, children, ...props }) => {
 		setRenameText(e.target.value);
 	};
 
+	const onKeyDown = e => {
+		if (e.key === "Enter") {
+			e.target.blur();
+			onRenameOutsideClick();
+		}
+	};
+
 	return isFolder ? (
 		<Fragment>
 			<div className="folder" ref={fileRef}>
 				{isRenaming ? (
 					<div
 						style={{
-							marginLeft: `${level * levelIndentStep}px`
+							marginLeft: `${level * levelIndentStep}px`,
 						}}
 						className="one-liner"
 					>
 						<Icon type="arrow" customStyle={isOpen ? "arrow-open" : "arrow"} />
-						<input value={renameText} className="folder-rename" onChange={onRenameChange} />
+						<input
+							autoFocus={true}
+							value={renameText}
+							className="folder-rename"
+							onChange={onRenameChange}
+							onKeyDown={onKeyDown}
+						/>
 					</div>
 				) : (
 					<div
@@ -71,11 +84,13 @@ const File = ({ file, levelIndentStep, onClick, children, ...props }) => {
 		</Fragment>
 	) : isRenaming ? (
 		<input
+			autoFocus={true}
 			ref={fileRef}
 			value={renameText}
-			onChange={onRenameChange}
 			className="folder-rename"
 			style={{ marginLeft: `${level * levelIndentStep}px` }}
+			onChange={onRenameChange}
+			onKeyDown={onKeyDown}
 		/>
 	) : (
 		<div
