@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import { sortFiles, getBranchMembers, getFileParent, getFileLevel } from "helpers/FileContextHelpers";
 import { UPDATE_FILETREE, GET_FILETREE } from "queries/FileQueries";
+import { FILE_CREATE, FOLDER_CREATE } from "schemas/FIleSchema";
 
 export const FileContext = createContext();
 
@@ -21,7 +22,7 @@ export const FileProvider = ({ children }) => {
 	const [renameStateInfo, setRenameStateInfo] = useState({
 		isActive: false,
 		fileId: null,
-		firstTime: false
+		firstTime: false,
 	});
 	const [copiedItem, setCopiedItem] = useState({});
 
@@ -48,8 +49,8 @@ export const FileProvider = ({ children }) => {
 		const result = await updateFileTreeMutation({
 			variables: {
 				id: data.fileTree.id,
-				data: newData
-			}
+				data: newData,
+			},
 		});
 
 		console.log("MUTATION RESULT", result);
@@ -164,8 +165,6 @@ export const FileProvider = ({ children }) => {
 
 		const fileTreeCopy = fileTree.slice();
 
-		let parentFile = fileTree.find(file => file.id === id);
-
 		for (let file in fileTreeCopy) {
 			if (fileTreeCopy[file].id === copiedItem.id) {
 				fileTreeCopy[file].parentId = id;
@@ -200,17 +199,7 @@ export const FileProvider = ({ children }) => {
 	const createFile = parentId => {
 		console.log("Create File", parentId);
 
-		let parentFile = fileTree.find(file => file.id === parentId);
-
-		const newFile = {
-			id: Math.random(),
-			title: "",
-			isFolder: false,
-			parentId: parentId,
-
-			isOpen: false,
-			order: null
-		};
+		const newFile = FILE_CREATE({ parentId: parentId });
 
 		console.log("NEW FILE", newFile);
 
@@ -222,19 +211,9 @@ export const FileProvider = ({ children }) => {
 	const createFolder = parentId => {
 		console.log("Create Folder", parentId);
 
-		let parentFile = fileTree.find(file => file.id === parentId);
+		const newFolder = FOLDER_CREATE({ parentId: parentId });
 
-		console.log("PARENT FILE", parentFile);
-
-		const newFolder = {
-			id: Math.random(),
-			title: "",
-			isFolder: true,
-			parentId: parentId,
-
-			isOpen: false,
-			order: null
-		};
+		console.log("NEW FOLDER", newFolder);
 
 		setFileTree([...fileTree, newFolder]);
 
@@ -279,7 +258,7 @@ export const FileProvider = ({ children }) => {
 				createFile,
 				createFolder,
 				renameStateInfo,
-				turnOffRenameState
+				turnOffRenameState,
 			}}
 		>
 			{children}
