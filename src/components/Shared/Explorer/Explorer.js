@@ -23,7 +23,7 @@ const Explorer = ({ contentWidth }) => {
 	const [overlayDimensions, setOverlayDimensions] = useState({ width: 0, height: 0 });
 
 	useEffect(() => {
-		if (fileTree.length === 0 && explorerBodyRef.current === null) return;
+		if (fileTree.length === 0 || explorerBodyRef.current === null) return;
 
 		setupExplorerChildren();
 
