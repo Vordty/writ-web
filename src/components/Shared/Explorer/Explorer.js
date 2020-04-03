@@ -23,21 +23,30 @@ const Explorer = ({ contentWidth }) => {
 	const [overlayDimensions, setOverlayDimensions] = useState({ width: 0, height: 0 });
 
 	useEffect(() => {
-		if (fileTree.length === 0) return;
+		if (fileTree.length === 0 && explorerBodyRef.current === null) return;
 
-		if (explorerBodyRef.current === null) return;
+		setupExplorerChildren();
 
+		setOverlayDimensions({
+			width: contentWidth,
+			height: explorerBodyRef.current.clientHeight,
+		});
+	}, [explorerBodyRef, contentWidth, fileTree]);
+
+	const setupExplorerChildren = () => {
 		if (
 			explorerBodyRef.current.childNodes[0].className === "folder" ||
 			explorerBodyRef.current.childNodes[0].className === "file"
 		) {
+			if (explorerBodyRef.current.childNodes.length > 1) {
+				Array.prototype.slice.call(explorerBodyRef.current.childNodes).map(childNode => {
+					childNode.style.paddingTop = "0px";
+				});
+			}
+
 			explorerBodyRef.current.childNodes[0].style.paddingTop = "10px";
 		}
-		setOverlayDimensions({
-			width: contentWidth,
-			height: explorerBodyRef.current.clientHeight
-		});
-	}, [explorerBodyRef, contentWidth, fileTree]);
+	};
 
 	let startTarget;
 	const onDragStart = e => {
