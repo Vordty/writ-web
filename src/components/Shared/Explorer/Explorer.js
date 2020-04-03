@@ -34,18 +34,13 @@ const Explorer = ({ contentWidth }) => {
 	}, [explorerBodyRef, contentWidth, fileTree]);
 
 	const setupExplorerChildren = () => {
-		if (
-			explorerBodyRef.current.childNodes[0].className === "folder" ||
-			explorerBodyRef.current.childNodes[0].className === "file"
-		) {
-			if (explorerBodyRef.current.childNodes.length > 1) {
-				Array.prototype.slice.call(explorerBodyRef.current.childNodes).map(childNode => {
-					childNode.style.paddingTop = "0px";
-				});
-			}
-
-			explorerBodyRef.current.childNodes[0].style.paddingTop = "10px";
+		if (explorerBodyRef.current.childNodes.length > 1) {
+			Array.prototype.slice.call(explorerBodyRef.current.childNodes).map(childNode => {
+				childNode.style.paddingTop = "0px";
+			});
 		}
+
+		explorerBodyRef.current.childNodes[0].style.paddingTop = "10px";
 	};
 
 	let startTarget;
