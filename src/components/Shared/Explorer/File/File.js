@@ -83,25 +83,29 @@ const File = ({ file, levelIndentStep, onClick, children, ...props }) => {
 			</div>
 		</Fragment>
 	) : isRenaming ? (
-		<input
-			autoFocus={true}
-			ref={fileRef}
-			value={renameText}
-			className="folder-rename"
-			style={{ marginLeft: `${level * levelIndentStep}px` }}
-			onChange={onRenameChange}
-			onKeyDown={onKeyDown}
-		/>
+		<div className="file-input-container">
+			<input
+				autoFocus={true}
+				ref={fileRef}
+				value={renameText}
+				className="folder-rename"
+				style={{ marginLeft: `${level * levelIndentStep}px` }}
+				onChange={onRenameChange}
+				onKeyDown={onKeyDown}
+			/>
+		</div>
 	) : (
-		<div
-			{...props}
-			ref={fileRef}
-			className="file overflow-dots"
-			style={{ paddingLeft: `${level * levelIndentStep}px` }}
-			onContextMenu={e => onMenuClick(e, "file", id)}
-			onDoubleClick={() => openFile(id)}
-		>
-			{title}
+		<div className="file-container">
+			<div
+				{...props}
+				ref={fileRef}
+				className="file overflow-dots"
+				style={{ paddingLeft: `${level * levelIndentStep}px` }}
+				onContextMenu={e => onMenuClick(e, "file", id)}
+				onDoubleClick={() => openFile(id)}
+			>
+				{title}
+			</div>
 		</div>
 	);
 };
