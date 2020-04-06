@@ -1,13 +1,15 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import { sortFiles, getBranchMembers, getFileParent, getFileLevel } from "helpers/FileContextHelpers";
 import { UPDATE_FILETREE, GET_FILETREE } from "queries/FileQueries";
 import { FILE_CREATE, FOLDER_CREATE } from "schemas/FIleSchema";
+import { ErrorContext } from "./ErrorContext";
 
 export const FileContext = createContext();
 
 export const FileProvider = ({ children }) => {
+	const { addError } = useContext(ErrorContext);
 	const { loading, error, data } = useQuery(GET_FILETREE);
 
 	const [updateFileTreeMutation] = useMutation(UPDATE_FILETREE);
@@ -52,6 +54,15 @@ export const FileProvider = ({ children }) => {
 				data: newData,
 			},
 		});
+
+		const success = result.data.updateFileTree.success;
+		const message = result.data.updateFileTree.message;
+
+		if (!success) {
+			addError(message, success);
+		} else {
+			setFileTree(newData);
+		}
 
 		console.log("MUTATION RESULT", result);
 	};
@@ -106,7 +117,6 @@ export const FileProvider = ({ children }) => {
 			}
 		}
 
-		setFileTree(fileTreeCopy);
 		updateFileTree(fileTreeCopy);
 	};
 
@@ -121,7 +131,6 @@ export const FileProvider = ({ children }) => {
 			}
 		}
 
-		setFileTree(fileTreeCopy);
 		updateFileTree(fileTreeCopy);
 	};
 
@@ -142,7 +151,6 @@ export const FileProvider = ({ children }) => {
 					fileTreeCopy[file].title = newTitle;
 				}
 			}
-			setFileTree(fileTreeCopy);
 			updateFileTree(fileTreeCopy);
 		}
 	};
@@ -171,7 +179,6 @@ export const FileProvider = ({ children }) => {
 			}
 		}
 
-		setFileTree(fileTreeCopy);
 		updateFileTree(fileTreeCopy);
 	};
 
@@ -180,7 +187,6 @@ export const FileProvider = ({ children }) => {
 
 		const fileTreeCopy = fileTree.filter(file => file.id !== id);
 
-		setFileTree(fileTreeCopy);
 		updateFileTree(fileTreeCopy);
 	};
 
@@ -192,7 +198,6 @@ export const FileProvider = ({ children }) => {
 		const fileTreeCopy = fileTree.filter(file => !branchMembers.includes(file));
 		console.log("fileTreeCopy", fileTreeCopy);
 
-		setFileTree(fileTreeCopy);
 		updateFileTree(fileTreeCopy);
 	};
 
