@@ -7,6 +7,7 @@ import { useOutsideAlerter } from "../helpers/OutsideClick";
 import { positionMenu } from "../helpers/PositionContextMenu";
 import MENU_SCHEMA from "../schemas/MenuSchema";
 import { FileContext } from "./FileContext";
+import { ErrorContext } from "contexts/ErrorContext";
 
 export const ComponentContext = createContext();
 
@@ -15,6 +16,7 @@ export const ComponentProvider = ({ children }) => {
 	useOutsideAlerter(contextMenuRef, () => hideContextMenu());
 
 	const fileContext = useContext(FileContext);
+	const { error, removeError } = useContext(ErrorContext);
 
 	const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
 	const [menuType, setMenuType] = useState("");
@@ -57,10 +59,19 @@ export const ComponentProvider = ({ children }) => {
 		return items;
 	};
 
+	const renderContextMenu = () => {
+		return <ContextMenu menuRef={contextMenuRef} items={getContextMenuItems} />;
+	};
+
+	const renderError = () => {
+		return <div>{error.message}</div>;
+	};
+
 	return (
 		<ComponentContext.Provider value={{ showContextMenu, hideContextMenu, onMenuClick }}>
 			{children}
-			{isContextMenuOpen && <ContextMenu menuRef={contextMenuRef} items={getContextMenuItems} />}
+			{isContextMenuOpen && renderContextMenu()}
+			{error && !error.status && renderError()}
 		</ComponentContext.Provider>
 	);
 };
