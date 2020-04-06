@@ -1,4 +1,5 @@
 import React, { createContext, useState, useRef, useEffect, useContext } from "react";
+import { useToasts } from "react-toast-notifications";
 
 import ContextMenu from "../components/Shared/ContextMenu/ContextMenu";
 import ContextMenuItem from "../components/Shared/ContextMenu/ContextMenuItem/ContextMenuItem";
@@ -18,6 +19,8 @@ export const ComponentProvider = ({ children }) => {
 	const fileContext = useContext(FileContext);
 	const { error, removeError } = useContext(ErrorContext);
 
+	const { addToast, removeAllToasts } = useToasts();
+
 	const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
 	const [menuType, setMenuType] = useState("");
 	const [lastEvent, setLastEvent] = useState();
@@ -28,6 +31,13 @@ export const ComponentProvider = ({ children }) => {
 			positionMenu(lastEvent, contextMenuRef.current);
 		}
 	}, [isContextMenuOpen]);
+
+	useEffect(() => {
+		if (error && !error.status) {
+			removeAllToasts();
+			renderError();
+		}
+	}, [error]);
 
 	const showContextMenu = e => {
 		setIsContextMenuOpen(true);
@@ -64,14 +74,13 @@ export const ComponentProvider = ({ children }) => {
 	};
 
 	const renderError = () => {
-		return <div>{error.message}</div>;
+		addToast(error.message, { appearance: "error", autoDismiss: true, autoDismissTimeout: 3000 });
 	};
 
 	return (
 		<ComponentContext.Provider value={{ showContextMenu, hideContextMenu, onMenuClick }}>
 			{children}
 			{isContextMenuOpen && renderContextMenu()}
-			{error && !error.status && renderError()}
 		</ComponentContext.Provider>
 	);
 };
