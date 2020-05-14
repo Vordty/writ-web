@@ -1,8 +1,8 @@
 import React, { Fragment, useContext, useState, useRef, useEffect } from "react";
 
-import Icon from "../../../Icon/Icon";
-import { ComponentContext } from "../../../../contexts/ComponentContext";
-import { FileContext } from "../../../../contexts/FileContext";
+import Icon from "../../../components/Icon/Icon";
+import { ComponentContext } from "../../../contexts/ComponentContext";
+import { FileContext } from "../../../contexts/FileContext";
 
 import "./File.scss";
 import { useOutsideAlerter } from "helpers/OutsideClick";

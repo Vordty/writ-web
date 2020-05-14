@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { FileContext } from "../../../contexts/FileContext";
+import { FileContext } from "../../contexts/FileContext";
 
 import "./TextEditor.scss";
 

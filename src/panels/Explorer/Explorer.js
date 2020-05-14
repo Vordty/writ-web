@@ -1,14 +1,14 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 
 import File from "./File/File";
-import ListDraggable from "../../List/ListDraggable/ListDraggable";
+import ListDraggable from "../../components/List/ListDraggable/ListDraggable";
 
 import "./Explorer.scss";
-import Icon from "../../Icon/Icon";
+import Icon from "../../components/Icon/Icon";
 import Overlay from "components/Overlay/Overlay";
 
-import { ComponentContext } from "../../../contexts/ComponentContext";
-import { FileContext } from "../../../contexts/FileContext";
+import { ComponentContext } from "../../contexts/ComponentContext";
+import { FileContext } from "../../contexts/FileContext";
 
 const levelIndentStep = 20;
 
@@ -17,7 +17,7 @@ const Explorer = ({ contentWidth }) => {
 
 	const { onMenuClick } = useContext(ComponentContext);
 	const { fileTree, getFileTree, toggleFolder, moveFile, moveFileToRoot, renameStateInfo } = useContext(
-		FileContext
+		FileContext,
 	);
 
 	const [overlayDimensions, setOverlayDimensions] = useState({ width: 0, height: 0 });

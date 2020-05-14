@@ -1,11 +1,11 @@
 import React from "react";
 
-import Sidebar from "../../components/Shared/Sidebar/Sidebar";
-import Explorer from "../../components/Shared/Explorer/Explorer";
-import OpenedFiles from "../../components/Shared/OpenedFiles/OpenedFiles";
-import TextEditor from "../../components/Shared/TextEditor/TextEditor";
+import Sidebar from "components/Shared/Sidebar/Sidebar";
+import Explorer from "panels/Explorer/Explorer";
+import OpenedFiles from "panels/OpenedFiles/OpenedFiles";
+import TextEditor from "panels/TextEditor/TextEditor";
 
-import ListDraggable from "../../components/List/ListDraggable/ListDraggable";
+import ListDraggable from "components/List/ListDraggable/ListDraggable";
 
 import "./Editor.scss";
 

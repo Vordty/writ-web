@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 
-import ListDraggable from "../../List/ListDraggable/ListDraggable";
+import ListDraggable from "../../components/List/ListDraggable/ListDraggable";
 
 import "./OpenedFiles.scss";
-import Icon from "../../Icon/Icon";
-import { FileContext } from "../../../contexts/FileContext";
+import Icon from "../../components/Icon/Icon";
+import { FileContext } from "../../contexts/FileContext";
 
 const OpenedFiles = ({ children, style }) => {
 	const { getFileOnlyTree, displayFile, closeFile } = useContext(FileContext);
