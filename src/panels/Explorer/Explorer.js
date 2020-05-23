@@ -12,7 +12,7 @@ import { FileContext } from "../../contexts/FileContext";
 
 const levelIndentStep = 20;
 
-const Explorer = ({ contentWidth }) => {
+const Explorer = ({ contentWidth, getWidth }) => {
 	const explorerBodyRef = useRef(null);
 
 	const { onMenuClick } = useContext(ComponentContext);
@@ -32,6 +32,10 @@ const Explorer = ({ contentWidth }) => {
 			height: explorerBodyRef.current.clientHeight,
 		});
 	}, [explorerBodyRef, contentWidth, fileTree]);
+
+	useEffect(() => {
+		if (getWidth) getWidth(contentWidth);
+	}, [overlayDimensions]);
 
 	const setupExplorerChildren = () => {
 		if (explorerBodyRef.current.childNodes.length > 1) {
