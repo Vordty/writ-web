@@ -3,6 +3,7 @@
 .sidebar {
 	display: flex;
 	flex-direction: row;
+	transition: all 0.1s ease-in-out 0s;
 
 	.sidebar-options {
 		min-width: 50px;
