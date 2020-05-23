@@ -14,6 +14,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { ComponentProvider } from "./contexts/ComponentContext";
 import { FileProvider } from "./contexts/FileContext";
 import { ErrorProvider } from "contexts/ErrorContext";
+import { StyleProvider } from "contexts/StyleContext";
 import { ToastProvider } from "react-toast-notifications";
 
 function App() {
@@ -23,26 +24,31 @@ function App() {
 				<FileProvider>
 					<ToastProvider>
 						<ComponentProvider>
-							<div className="App">
-								<Router>
-									<Switch>
-										<Redirect exact from="/" to="/app" />
-										<AuthRoute
-											path="/login"
-											component={Login}
-											redirectPath="/app"
-										/>
-										<AuthRoute
-											path="/signup"
-											component={Signup}
-											redirectPath="/app"
-										/>
-										<Route path="/verification" component={Verification} />
-										<PrivateRoute path="/projects" component={Projects} />
-										<PrivateRoute path="/app" component={Editor} />
-									</Switch>
-								</Router>
-							</div>
+							<StyleProvider>
+								<div className="App">
+									<Router>
+										<Switch>
+											<Redirect exact from="/" to="/app" />
+											<AuthRoute
+												path="/login"
+												component={Login}
+												redirectPath="/app"
+											/>
+											<AuthRoute
+												path="/signup"
+												component={Signup}
+												redirectPath="/app"
+											/>
+											<Route
+												path="/verification"
+												component={Verification}
+											/>
+											<PrivateRoute path="/projects" component={Projects} />
+											<PrivateRoute path="/app" component={Editor} />
+										</Switch>
+									</Router>
+								</div>
+							</StyleProvider>
 						</ComponentProvider>
 					</ToastProvider>
 				</FileProvider>
