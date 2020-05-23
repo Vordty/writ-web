@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 
 import Sidebar from "components/Shared/Sidebar/Sidebar";
 import Explorer from "panels/Explorer/Explorer";
@@ -9,13 +9,17 @@ import ListDraggable from "components/List/ListDraggable/ListDraggable";
 
 import "./Editor.scss";
 
+import { StyleContext } from "contexts/StyleContext";
+
 const Editor = () => {
+	const { setSidebarDimensions, getSidebarDimensions } = useContext(StyleContext);
+
 	return (
 		<div className="editor">
 			<Sidebar header="Explorer">
-				<Explorer></Explorer>
+				<Explorer getWidth={explorerWidth => setSidebarDimensions(explorerWidth)} />
 			</Sidebar>
-			<div className="w-100 flex-v">
+			<div className="flex-v" style={{ width: window.innerWidth - getSidebarDimensions().width }}>
 				<div className="pl-4 tools-container">
 					<ListDraggable>
 						<div key="tool-1">TOOL 1</div>
