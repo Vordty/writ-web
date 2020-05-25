@@ -6,20 +6,6 @@
 	border: none;
 	background: none;
 	cursor: pointer;
-	font-size: $button-a;
-	@include resize(font-size, $button-b, $button-c, $button-d, $button-e, $button-f);
-
-	&.small {
-		font-size: $button-small-a;
-		@include resize(
-			font-size,
-			$button-small-b,
-			$button-small-c,
-			$button-small-d,
-			$button-small-e,
-			$button-small-f
-		);
-	}
 }
 
 .btn-solid {
@@ -49,4 +35,14 @@ $mult: 2;
 		$button-e * $mult,
 		$button-f * $mult
 	);
+}
+
+.btn-toolbar {
+	@extend .button;
+	border-right: 1.5px solid black;
+	padding: 8px;
+
+	&:last-child {
+		border-right: none;
+	}
 }
