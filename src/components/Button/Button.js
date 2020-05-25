@@ -6,11 +6,9 @@ import "./Button.scss";
 
 const Button = ({ type, style = "", children, ...props }) => {
 	return (
-		<div className="button-container">
-			<button {...props} className={type + " " + style}>
-				{children}
-			</button>
-		</div>
+		<button {...props} className={"btn-" + type + " " + style}>
+			{children}
+		</button>
 	);
 };
 
