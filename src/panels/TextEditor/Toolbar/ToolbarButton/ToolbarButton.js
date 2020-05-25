@@ -2,8 +2,6 @@ import React from "react";
 
 import Button from "components/Button/Button";
 
-import "./ToolbarButton.scss";
-
 const ToolbarButton = ({ format, icon, isActive, onClick }) => {
 	return (
 		<Button
