@@ -1,6 +1,8 @@
-.text-editor {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+.text-editor-container {
 	height: 100%;
+	padding: 30px;
+
+	.text-editor {
+		height: 100%;
+	}
 }
