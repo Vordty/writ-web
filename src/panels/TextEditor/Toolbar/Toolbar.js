@@ -8,7 +8,7 @@ import ToolbarButton from "./ToolbarButton/ToolbarButton";
 
 import "./Toolbar.scss";
 
-const HoveringToolbar = ({ isFormatActive, toggleFormat }) => {
+const Toolbar = ({ isFormatActive, toggleFormat }) => {
 	const ref = useRef();
 	const editor = useSlate();
 
@@ -34,8 +34,8 @@ const HoveringToolbar = ({ isFormatActive, toggleFormat }) => {
 		const domRange = domSelection.getRangeAt(0);
 		const rect = domRange.getBoundingClientRect();
 		el.style.opacity = 1;
-		el.style.top = `${rect.top + window.pageYOffset - el.offsetHeight}px`;
-		el.style.left = `${rect.left + window.pageXOffset - el.offsetWidth / 2 + rect.width / 2}px`;
+		el.style.top = `${Math.round(rect.top + window.pageYOffset - el.offsetHeight)}px`;
+		el.style.left = `${Math.round(rect.left + window.pageXOffset - el.offsetWidth / 2 + rect.width / 2)}px`;
 	});
 
 	const onButtonClick = (e, format) => {
@@ -48,25 +48,31 @@ const HoveringToolbar = ({ isFormatActive, toggleFormat }) => {
 			<div ref={ref} className="toolbar-menu">
 				<ToolbarButton
 					format="bold"
-					icon="format_bold"
+					icon="B"
 					isActive={isFormatActive(editor, "bold")}
 					onClick={e => onButtonClick(e, "bold")}
 				/>
 				<ToolbarButton
 					format="italic"
-					icon="format_italic"
+					icon="I"
 					isActive={isFormatActive(editor, "italic")}
 					onClick={e => onButtonClick(e, "italic")}
 				/>
 				<ToolbarButton
 					format="underline"
-					icon="format_underline"
+					icon="U"
 					isActive={isFormatActive(editor, "underline")}
 					onClick={e => onButtonClick(e, "underline")}
+				/>
+				<ToolbarButton
+					format="fontsize"
+					icon="F"
+					isActive={isFormatActive(editor, "fontsize")}
+					onClick={e => onButtonClick(e, "fontsize")}
 				/>
 			</div>
 		</div>
 	);
 };
 
-export default HoveringToolbar;
+export default Toolbar;
