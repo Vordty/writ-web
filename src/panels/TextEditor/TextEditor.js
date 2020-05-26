@@ -18,34 +18,35 @@ const TextEditor = () => {
 		},
 	]);
 
-	useEffect(() => {
-		console.log("TEXT EDITOR CHANGED");
-	}, [value]);
-
 	const toggleFormat = (editor, format) => {
 		const isActive = isFormatActive(editor, format);
-		Transforms.setNodes(editor, { [format]: isActive ? null : true }, { match: Text.isText, split: true });
+		Transforms.setNodes(
+			editor,
+			{ format: { type: format, isActive: isActive ? false : true } },
+			{ match: Text.isText, split: true },
+		);
 	};
 
 	const isFormatActive = (editor, format) => {
 		const [match] = Editor.nodes(editor, {
-			match: n => n[format] === true,
-			mode: "all",
+			match: n => n.format && n.format.type === format && n.format.isActive,
 		});
 		return !!match;
 	};
 
 	const Leaf = ({ attributes, children, leaf }) => {
-		if (leaf.bold) {
-			children = <strong>{children}</strong>;
-		}
+		if (leaf.format && leaf.format.isActive) {
+			if (leaf.format && leaf.format.type === "bold") {
+				children = <strong>{children}</strong>;
+			}
 
-		if (leaf.italic) {
-			children = <em>{children}</em>;
-		}
+			if (leaf.italic) {
+				children = <em>{children}</em>;
+			}
 
-		if (leaf.underlined) {
-			children = <u>{children}</u>;
+			if (leaf.underlined) {
+				children = <u>{children}</u>;
+			}
 		}
 
 		return <span {...attributes}>{children}</span>;
