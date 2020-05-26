@@ -41,6 +41,8 @@ $mult: 2;
 	@extend .button;
 	border-right: 1.5px solid black;
 	padding: 8px;
+	min-width: 32px;
+	font-weight: bold;
 
 	&:last-child {
 		border-right: none;
